@@ -149,7 +149,9 @@ JOYA supports any language. After setup, tell your agent:
 
 > **Translate the JOYA framework to Japanese** (or any language)
 
-Your agent will run the built-in translation tool and generate a localized copy under `i18n-<locale>/`, mirroring `core/`, `guides/`, and `examples/`. Only changed files are re-translated on subsequent runs.
+Your agent will translate all framework docs using its own language capabilities — no extra API keys or dependencies needed. Translated files go to `i18n-<locale>/`, mirroring `core/`, `guides/`, and `examples/`.
+
+> **Note:** Translation will consume some tokens from your agent's model. The framework is ~50 files, so budget accordingly.
 
 ## Contributing
 
