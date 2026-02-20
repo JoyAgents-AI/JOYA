@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "agents": [
+    {
+      "name": "my-agent",
+      "role": "manager",
+      "status": "active",
+      "runtime": {
+        "platform": "",
+        "model": "",
+        "node": ""
+      },
+      "communication": {
+        "adapter": "",
+        "config": {}
+      },
+      "extra_permissions": []
+    }
+  ]
+}

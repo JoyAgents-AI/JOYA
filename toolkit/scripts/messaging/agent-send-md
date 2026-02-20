@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# agent-send-md — Friendly wrapper for agent-send (Markdown-safe output)
+# Reads JOY_ROOT from environment or auto-detects from script location.
+#
+# Usage: agent-send-md <agent> <message>
+
+set -euo pipefail
+
+if [ $# -lt 2 ]; then
+  echo "Usage: agent-send-md <agent> <message>"
+  exit 1
+fi
+
+# Auto-detect JOY_ROOT if not set
+if [ -z "${JOY_ROOT:-}" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  export JOY_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+fi
+
+# Call agent-send from the same directory
+OUT="$("$(dirname "$0")/agent-send" "$@")"
+echo "$OUT" | grep -m1 '"text"' || echo "$OUT"

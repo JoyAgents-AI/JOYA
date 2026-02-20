@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+# agent-send — Cross-agent message router for JOYA
+# Reads config from DIRECTORY.json (under $JOY_ROOT/instance/agents/)
+#
+# Usage: agent-send <agent> <message>
+#
+# Environment:
+#   JOY_ROOT  — path to joy-agents root (auto-detected if not set)
+
+set -euo pipefail
+
+if [ $# -lt 2 ]; then
+  echo "Usage: agent-send <agent> <message>"
+  echo "  Set JOY_ROOT or run from within the joy-agents tree."
+  exit 1
+fi
+
+TARGET="$1"
+shift
+MSG="$*"
+SENDER="${AGENT_NAME:-}"
+
+# --- Resolve JOY_ROOT ---
+if [ -z "${JOY_ROOT:-}" ]; then
+  # Walk up from this script's location: toolkit/scripts/messaging/ → root
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  JOY_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+fi
+
+DIR_JSON="$JOY_ROOT/instance/agents/DIRECTORY.json"
+
+if [ ! -f "$DIR_JSON" ]; then
+  echo "❌ DIRECTORY.json not found: $DIR_JSON"
+  echo "   Set JOY_ROOT or ensure you're in the joy-agents tree."
+  exit 1
+fi
+
+# --- Parse agent directory ---
+read_json() {
+  python3 - "$DIR_JSON" "$TARGET" <<'PY'
+import json, sys
+
+path, target = sys.argv[1], sys.argv[2]
+directory = json.load(open(path))
+
+# Support both v2 (flat) and v3 (nested adapters) formats
+agent = directory.get("agents", {}).get(target)
+if not agent:
+    print("ERR")
+    for _ in range(6):
+        print("")
+    sys.exit(0)
+
+# Determine notify method
+adapters = agent.get("adapters", {})
+notify = "ssh"  # default
+
+if "mattermost" in adapters and "ssh" not in adapters:
+    notify = "mattermost"
+elif agent.get("notify"):
+    notify = agent["notify"]
+
+# SSH info
+ssh = adapters.get("ssh", {})
+host = ssh.get("host", agent.get("host", agent.get("node", "")))
+session_to = agent.get("sessionTo", agent.get("session_to", ""))
+
+# Mattermost info
+mm = adapters.get("mattermost", agent.get("mattermost", {}))
+mm_channel = mm.get("channel_id", "")
+mm_token = mm.get("bot_token", "")
+mm_url = mm.get("base_url", "")
+
+print(host)
+print(session_to)
+print(notify)
+print(mm_channel)
+print(mm_token)
+print(mm_url)
+PY
+}
+
+R_RAW="$(read_json)"
+HOST="$(printf '%s\n' "$R_RAW" | sed -n '1p')"
+TO="$(printf '%s\n' "$R_RAW" | sed -n '2p')"
+NOTIFY="$(printf '%s\n' "$R_RAW" | sed -n '3p')"
+MM_CHANNEL="$(printf '%s\n' "$R_RAW" | sed -n '4p')"
+MM_TOKEN="$(printf '%s\n' "$R_RAW" | sed -n '5p')"
+MM_URL="$(printf '%s\n' "$R_RAW" | sed -n '6p')"
+
+if [ "$HOST" = "ERR" ]; then
+  echo "❌ Unknown agent: $TARGET"
+  echo "   Available agents:"
+  python3 -c "import json; d=json.load(open('$DIR_JSON')); [print(f'     - {k}') for k in d.get('agents',{})]"
+  exit 2
+fi
+
+# --- Mattermost route ---
+if [ "$NOTIFY" = "mattermost" ]; then
+  if [ -z "$MM_URL" ] || [ -z "$MM_CHANNEL" ]; then
+    echo "❌ Mattermost config incomplete for $TARGET. Check DIRECTORY.json adapters.mattermost."
+    exit 3
+  fi
+
+  # Use SENDER's token if available, so the message shows as from the sender
+  SEND_TOKEN="$MM_TOKEN"
+  if [ -n "$SENDER" ] && [ "$SENDER" != "$TARGET" ]; then
+    SENDER_TOKEN=$(python3 - "$DIR_JSON" "$SENDER" <<'PY2'
+import json, sys
+directory = json.load(open(sys.argv[1]))
+agent = directory.get("agents", {}).get(sys.argv[2], {})
+mm = agent.get("adapters", {}).get("mattermost", {})
+print(mm.get("bot_token", ""))
+PY2
+)
+    if [ -n "$SENDER_TOKEN" ]; then
+      SEND_TOKEN="$SENDER_TOKEN"
+    fi
+  fi
+
+  if [ -z "$SEND_TOKEN" ]; then
+    echo "❌ No Mattermost token available. Set AGENT_NAME or check DIRECTORY.json."
+    exit 3
+  fi
+
+  ESCAPED_MSG=$(python3 -c "import json,sys; print(json.dumps(sys.argv[1]))" "@${TARGET} ${MSG}")
+  RESULT=$(curl -s -X POST "${MM_URL}/api/v4/posts" \
+    -H "Authorization: Bearer ${SEND_TOKEN}" \
+    -H "Content-Type: application/json" \
+    -d "{\"channel_id\":\"${MM_CHANNEL}\",\"message\":${ESCAPED_MSG}}")
+  POST_ID=$(echo "$RESULT" | python3 -c "import json,sys; print(json.load(sys.stdin).get('id',''))" 2>/dev/null || echo "")
+  if [ -n "$POST_ID" ]; then
+    echo "{\"text\": \"[mattermost] Message sent to @${TARGET} (post: ${POST_ID})\"}"
+  else
+    echo "$RESULT"
+    exit 1
+  fi
+  exit 0
+fi
+
+# --- Manual/external route ---
+if [ "$HOST" = "manual" ] || [ "$HOST" = "external" ]; then
+  echo "Target $TARGET is manual/external; use handoff packet flow."
+  exit 3
+fi
+
+# --- SSH route (OpenClaw agent) ---
+# session_to format: "agent:<agentId>:main" — extract agentId for --agent flag
+AGENT_ID=""
+if [[ "$TO" == agent:*:* ]]; then
+  AGENT_ID="$(echo "$TO" | cut -d: -f2)"
+fi
+
+if [ -n "$AGENT_ID" ]; then
+  CMD="export PATH=/opt/homebrew/bin:/usr/local/bin:\$PATH; openclaw agent --agent ${AGENT_ID} --message \"${MSG//\"/\\\"}\" --timeout 60 --json"
+else
+  CMD="export PATH=/opt/homebrew/bin:/usr/local/bin:\$PATH; openclaw agent --session-id ${TO} --message \"${MSG//\"/\\\"}\" --timeout 60 --json"
+fi
+LOCAL_HOST="$(hostname -s 2>/dev/null || hostname)"
+if [ "$HOST" = "$LOCAL_HOST" ]; then
+  eval "$CMD"
+else
+  ssh -o BatchMode=yes -o ConnectTimeout=8 -o StrictHostKeyChecking=accept-new "$HOST" "$CMD"
+fi
