@@ -118,6 +118,11 @@ always_confirm:
 ## Resources
 strategy: balanced      # frugal | balanced | quality
 
+## Translation
+model: low-cost          # low-cost | default | <specific model name>
+# Agent should switch to a cheap model (e.g. GPT-4o-mini, Gemini Flash, Haiku)
+# when translating framework docs to save tokens.
+
 ## Maintenance
 heartbeat: 7d           # heartbeat check interval
 gc_frequency: weekly    # weekly | biweekly | manual
