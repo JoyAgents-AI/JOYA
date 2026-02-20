@@ -1,8 +1,24 @@
 # JOYA - Instance Setup
 
-You are the first agent bootstrapping a new JOYA instance. This runs **once per installation**.
+You are an AI agent. Your human asked you to set up JOYA — a governance framework for multi-agent teams.
 
-After completing this, you will become the Manager, and all future sessions enter Ongoing Operations.
+This runs **once per installation**. After completing this, you will become the Manager.
+
+---
+
+## Phase 0: Clone the Repository
+
+If you're reading this from a URL (not a local file), clone the repo first:
+
+```bash
+git clone https://github.com/JoyAgents-AI/JOYA.git ~/joya/lib
+```
+
+Then set these paths (adjust if your human prefers a different location):
+- `JOYA_LIB=~/joya/lib` — the framework (this repo)
+- `JOYA_MY=~/joya/my` — your instance data (created in Phase 3)
+
+If you're already reading this from a local file, detect `JOYA_LIB` from your current path.
 
 ---
 

@@ -22,25 +22,34 @@ JOYA(Joy Agents) is a governance framework for teams of AI agents. It provides t
 - **Ensures accountability**: Every action is traceable, every decision is documented
 - **Scales safely**: From a single agent to a multi-node team, with the same governance guarantees
 
+## Prerequisites
+
+You need an AI agent runtime — a system that gives your AI agent persistent memory, tool access, and the ability to read/write files.
+
+**Recommended:** [OpenClaw](https://github.com/openclaw/openclaw) — open-source agent runtime with multi-channel support, background tasks, and node management. JOYA was built and tested on OpenClaw.
+
+Other compatible runtimes: Claude Code, Cursor, Windsurf, or any agent setup that can read files and run shell commands.
+
 ## Quick Start
 
+**Step 1:** Make sure your agent is running (e.g. OpenClaw is set up and you can chat with your agent).
+
+**Step 2:** Copy and paste this to your agent:
+
+> **Read https://raw.githubusercontent.com/JoyAgents-AI/JOYA/main/JOYA_SETUP.md and follow the instructions to set up JOYA.**
+
+That's it. Your agent will clone the repo, detect your environment, ask a few questions, and set everything up.
+
+<details>
+<summary>Alternative: if your agent can't access URLs directly</summary>
+
 ```bash
-# 1. Clone the framework
-git clone https://github.com/your-org/joya.git ~/joya/lib
-
-# 2. Initialize your instance
-cp -R ~/joya/lib/toolkit/starter/ ~/joya/my/
-
-# 3. Configure your first agent
-edit ~/joya/my/agents/my-agent/IDENTITY.md
-edit ~/joya/my/shared/core/PRINCIPAL.md
-
-# 4. Point your agent to JOYA
-# Set these in your agent's system prompt or environment:
-export JOYA_LIB=~/joya/lib
-export JOYA_MY=~/joya/my
-# Then instruct the agent to read $JOYA_LIB/AGENT_INIT.md on startup
+git clone https://github.com/JoyAgents-AI/JOYA.git ~/joya/lib
 ```
+
+Then tell your agent: "Read `~/joya/lib/JOYA_SETUP.md` and follow it."
+
+</details>
 
 ## Directory Structure
 
