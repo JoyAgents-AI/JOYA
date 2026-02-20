@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 # joy-validate.sh — Validate a JOYA instance against the protocol
-# Usage: joy-validate.sh [joy-agents-root]
+# Usage: joy-validate.sh [joya-root]
+#   joya-root defaults to ~/joya (parent of lib/ and my/)
+#
+# Expected structure:
+#   <root>/lib/          — Framework (this repo)
+#   <root>/my/           — Instance data
+#   <root>/my/agents/    — Agent directories + ROSTER.md + DIRECTORY.json
+#   <root>/my/shared/core/ — PRINCIPAL.md, PLAYBOOK.md, INFRASTRUCTURE.md
 
 set -euo pipefail
 
-ROOT="${1:-.}"
+ROOT="${1:-$HOME/joya}"
+LIB="$ROOT/lib"
+MY="$ROOT/my"
 ERRORS=0
 WARNINGS=0
 
@@ -13,31 +22,42 @@ fail()  { echo "  ❌ $1"; ERRORS=$((ERRORS + 1)); }
 warn()  { echo "  ⚠️  $1"; WARNINGS=$((WARNINGS + 1)); }
 
 echo "🔍 Validating JOYA: $ROOT"
+echo "   lib: $LIB"
+echo "   my:  $MY"
 echo ""
 
-# --- Protocol structure ---
+# --- Protocol structure (lib/core/) ---
 echo "📋 Protocol structure"
-[[ -f "$ROOT/protocol/core/AXIOMS.md" ]]        && pass "AXIOMS.md exists"        || fail "AXIOMS.md missing"
-[[ -f "$ROOT/protocol/core/RULES.md" ]]          && pass "RULES.md exists"          || fail "RULES.md missing"
-[[ -f "$ROOT/protocol/core/ARCHITECTURE.md" ]]   && pass "ARCHITECTURE.md exists"   || fail "ARCHITECTURE.md missing"
-[[ -f "$ROOT/protocol/core/ACCOUNTABILITY.md" ]]  && pass "ACCOUNTABILITY.md exists" || fail "ACCOUNTABILITY.md missing"
-[[ -f "$ROOT/protocol/core/CHANGELOG.md" ]]       && pass "CHANGELOG.md exists"      || fail "CHANGELOG.md missing"
+[[ -f "$LIB/core/AXIOMS.md" ]]          && pass "AXIOMS.md exists"          || fail "AXIOMS.md missing"
+[[ -f "$LIB/core/RULES.md" ]]           && pass "RULES.md exists"           || fail "RULES.md missing"
+[[ -f "$LIB/core/ARCHITECTURE.md" ]]    && pass "ARCHITECTURE.md exists"    || fail "ARCHITECTURE.md missing"
+[[ -f "$LIB/core/ACCOUNTABILITY.md" ]]  && pass "ACCOUNTABILITY.md exists"  || fail "ACCOUNTABILITY.md missing"
+[[ -f "$LIB/core/CHANGELOG.md" ]]       && pass "CHANGELOG.md exists"       || fail "CHANGELOG.md missing"
+[[ -f "$LIB/AGENT_INIT.md" ]]           && pass "AGENT_INIT.md exists"      || fail "AGENT_INIT.md missing"
 echo ""
 
-# --- Instance structure ---
+# --- Instance structure (my/) ---
 echo "📋 Instance structure"
-[[ -d "$ROOT/instance" ]]                         && pass "instance/ exists"         || fail "instance/ missing"
-[[ -d "$ROOT/instance/agents" ]]                  && pass "instance/agents/ exists"  || fail "instance/agents/ missing"
-[[ -f "$ROOT/instance/agents/ROSTER.md" ]]        && pass "ROSTER.md exists"         || fail "ROSTER.md missing"
-[[ -f "$ROOT/instance/agents/DIRECTORY.json" ]]   && pass "DIRECTORY.json exists"    || fail "DIRECTORY.json missing"
-[[ -d "$ROOT/instance/shared/config" ]]                  && pass "instance/shared/core/ exists"  || fail "instance/shared/core/ missing"
-[[ -f "$ROOT/instance/shared/core/PRINCIPAL.md" ]]     && pass "PRINCIPAL.md exists"      || fail "PRINCIPAL.md missing"
+[[ -d "$MY" ]]                           && pass "my/ exists"                || fail "my/ missing"
+[[ -d "$MY/agents" ]]                    && pass "my/agents/ exists"         || fail "my/agents/ missing"
+# ROSTER.md and DIRECTORY.json can be in my/agents/ or my/shared/agents/
+ROSTER=""; DIRECTORY=""
+[[ -f "$MY/agents/ROSTER.md" ]]          && ROSTER="$MY/agents/ROSTER.md"
+[[ -f "$MY/shared/agents/ROSTER.md" ]]   && ROSTER="$MY/shared/agents/ROSTER.md"
+[[ -f "$MY/agents/DIRECTORY.json" ]]     && DIRECTORY="$MY/agents/DIRECTORY.json"
+[[ -f "$MY/shared/agents/DIRECTORY.json" ]] && DIRECTORY="$MY/shared/agents/DIRECTORY.json"
+[[ -n "$ROSTER" ]]    && pass "ROSTER.md exists ($ROSTER)"       || fail "ROSTER.md missing"
+[[ -n "$DIRECTORY" ]] && pass "DIRECTORY.json exists ($DIRECTORY)" || fail "DIRECTORY.json missing"
+[[ -d "$MY/shared/core" ]]              && pass "my/shared/core/ exists"    || fail "my/shared/core/ missing"
+[[ -f "$MY/shared/core/PRINCIPAL.md" ]] && pass "PRINCIPAL.md exists"       || fail "PRINCIPAL.md missing"
+[[ -f "$MY/shared/core/PLAYBOOK.md" ]]  && pass "PLAYBOOK.md exists"       || warn "PLAYBOOK.md missing"
+[[ -f "$MY/shared/core/INFRASTRUCTURE.md" ]] && pass "INFRASTRUCTURE.md exists" || warn "INFRASTRUCTURE.md missing"
 echo ""
 
 # --- Manager requirement (R11) ---
 echo "📋 Manager requirement (R11)"
-if [[ -f "$ROOT/instance/agents/ROSTER.md" ]]; then
-  if grep -qi "manager" "$ROOT/instance/agents/ROSTER.md"; then
+if [[ -n "$ROSTER" ]]; then
+  if grep -qi "manager" "$ROSTER"; then
     pass "At least one Manager found in ROSTER.md"
   else
     fail "No Manager role found in ROSTER.md — R11 requires exactly one"
@@ -47,45 +67,63 @@ echo ""
 
 # --- Agent directories ---
 echo "📋 Agent identity files"
-if [[ -f "$ROOT/instance/agents/DIRECTORY.json" ]]; then
-  # Extract agent names from DIRECTORY.json (simple grep, no jq dependency)
-  AGENTS=$(grep -o '"name"[[:space:]]*:[[:space:]]*"[^"]*"' "$ROOT/instance/agents/DIRECTORY.json" | sed 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+if [[ -n "$DIRECTORY" ]]; then
+  # Support both v2 ("name": "x") and v3 (top-level keys under "agents")
+  AGENTS=$(python3 -c "
+import json, sys
+with open('$DIRECTORY') as f:
+    d = json.load(f)
+a = d.get('agents', d)
+if isinstance(a, dict):
+    print(' '.join(a.keys()))
+elif isinstance(a, list):
+    print(' '.join(x.get('name','') for x in a))
+" 2>/dev/null || grep -o '"name"[[:space:]]*:[[:space:]]*"[^"]*"' "$DIRECTORY" | sed 's/.*"\([^"]*\)".*/\1/')
   for agent in $AGENTS; do
-    AGENT_DIR="$ROOT/instance/agents/$agent"
+    AGENT_DIR="$MY/agents/$agent"
     if [[ -d "$AGENT_DIR" ]]; then
       [[ -f "$AGENT_DIR/IDENTITY.md" ]] && pass "$agent: IDENTITY.md exists" || warn "$agent: IDENTITY.md missing (recommended)"
     else
-      warn "$agent: agent directory missing (instance/agents/$agent/)"
+      warn "$agent: agent directory missing (my/agents/$agent/)"
     fi
   done
 fi
 echo ""
 
-# --- _shared directory ---
+# --- Shared traits ---
 echo "📋 Shared traits"
-[[ -d "$ROOT/instance/agents/_shared" ]] && pass "_shared/ exists" || warn "_shared/ missing (recommended)"
+[[ -d "$MY/agents/_shared" ]] && pass "_shared/ exists" || warn "_shared/ missing (recommended)"
 echo ""
 
 # --- Override validation (R9) ---
 echo "📋 Override validation (R9)"
-if [[ -d "$ROOT/instance/shared/rules" ]]; then
-  for rule_file in "$ROOT"/instance/shared/rules/*.md; do
+if [[ -d "$MY/shared/rules" ]]; then
+  for rule_file in "$MY"/shared/rules/*.md; do
     [[ -f "$rule_file" ]] || continue
     basename_f=$(basename "$rule_file")
     [[ "$basename_f" == "README.md" ]] && continue
 
-    # Check for override/patch targets
     target=$(grep -m1 "^overrides:" "$rule_file" 2>/dev/null | sed 's/overrides:[[:space:]]*//' || true)
-    if [[ -n "$target" && ! -f "$ROOT/$target" ]]; then
-      fail "Override target not found: $target (in $basename_f)"
+    if [[ -n "$target" ]]; then
+      # Resolve $JOYA_LIB and $JOYA_MY references
+      resolved="${target//\$JOYA_LIB/$LIB}"
+      resolved="${resolved//\$JOYA_MY/$MY}"
+      resolved="${resolved%%#*}"  # strip anchor
+      if [[ ! -f "$resolved" ]]; then
+        warn "Override target not found: $target (in $basename_f)"
+      fi
     fi
 
     target=$(grep -m1 "^patches:" "$rule_file" 2>/dev/null | sed 's/patches:[[:space:]]*//' || true)
-    if [[ -n "$target" && ! -f "$ROOT/$target" ]]; then
-      fail "Patch target not found: $target (in $basename_f)"
+    if [[ -n "$target" ]]; then
+      resolved="${target//\$JOYA_LIB/$LIB}"
+      resolved="${resolved//\$JOYA_MY/$MY}"
+      resolved="${resolved%%#*}"
+      if [[ ! -f "$resolved" ]]; then
+        warn "Patch target not found: $target (in $basename_f)"
+      fi
     fi
 
-    # Check axiom override attempt
     if grep -q "overrides:.*AXIOMS" "$rule_file" 2>/dev/null || grep -q "patches:.*AXIOMS" "$rule_file" 2>/dev/null; then
       fail "Axiom override/patch attempted in $basename_f — axioms are immutable (R9)"
     fi
@@ -94,16 +132,15 @@ if [[ -d "$ROOT/instance/shared/rules" ]]; then
 fi
 echo ""
 
-# --- Project .joy/ directories ---
+# --- Project registrations ---
 echo "📋 Project registrations"
-if [[ -d "$ROOT/instance/shared/projects" ]]; then
-  for proj_dir in "$ROOT"/instance/shared/projects/*/; do
+if [[ -d "$MY/shared/projects" ]]; then
+  for proj_dir in "$MY"/shared/projects/*/; do
     [[ -d "$proj_dir" ]] || continue
     proj_name=$(basename "$proj_dir")
     [[ -f "$proj_dir/META.md" ]]  && pass "Project $proj_name: META.md exists"  || warn "Project $proj_name: META.md missing"
     [[ -f "$proj_dir/PATHS.md" ]] && pass "Project $proj_name: PATHS.md exists" || warn "Project $proj_name: PATHS.md missing"
 
-    # Check if .joy/ exists at project root
     if [[ -f "$proj_dir/PATHS.md" ]]; then
       proj_root=$(grep -m1 "^root:" "$proj_dir/PATHS.md" 2>/dev/null | sed 's/root:[[:space:]]*//' || true)
       if [[ -n "$proj_root" && -d "$proj_root" ]]; then
@@ -112,7 +149,16 @@ if [[ -d "$ROOT/instance/shared/projects" ]]; then
     fi
   done
 else
-  warn "instance/shared/projects/ missing"
+  warn "my/shared/projects/ missing"
+fi
+echo ""
+
+# --- Framework version ---
+echo "📋 Framework version"
+if [[ -f "$LIB/VERSION" ]]; then
+  pass "VERSION: $(cat "$LIB/VERSION")"
+else
+  warn "VERSION file not found"
 fi
 echo ""
 

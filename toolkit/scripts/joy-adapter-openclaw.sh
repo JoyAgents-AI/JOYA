@@ -18,7 +18,7 @@
 #
 # Structure expected under joy-root:
 #   lib/   → Framework ($JOYA_LIB): AGENT_INIT.md, core/, guides/, toolkit/
-#   my/    → Instance  ($JOYA_MY):  agents/, shared/core/, shared/knowledge/
+#   my/    → Instance  ($JOYA_MY):  agents/, shared/core/ (or shared/config/), shared/knowledge/
 
 set -euo pipefail
 
@@ -102,7 +102,14 @@ fi
 JOYA_LIB="$JOY_ROOT/lib"
 JOYA_MY="$JOY_ROOT/my"
 AGENT_DIR="$JOYA_MY/agents/$AGENT_NAME"
-CONFIG_DIR="$JOYA_MY/shared/config"
+# Support both shared/core/ (standard) and shared/config/ (legacy)
+if [[ -d "$JOYA_MY/shared/core" ]]; then
+  CONFIG_DIR="$JOYA_MY/shared/core"
+elif [[ -d "$JOYA_MY/shared/config" ]]; then
+  CONFIG_DIR="$JOYA_MY/shared/config"
+else
+  CONFIG_DIR="$JOYA_MY/shared/core"
+fi
 
 # Workspace: argument > default OpenClaw location
 if [[ -z "$WORKSPACE" ]]; then

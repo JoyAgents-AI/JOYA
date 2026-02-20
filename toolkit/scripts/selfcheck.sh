@@ -1,78 +1,98 @@
 #!/usr/bin/env bash
-# selfcheck.sh - JOYA Self-Check Script
-# Usage: selfcheck.sh [--quiet] [--log] [--extend item1 item2 ...]
+# selfcheck.sh — JOYA agent self-check
+# Usage: selfcheck.sh [joya-root] [agent-name]
+#   joya-root defaults to ~/joya
+#   agent-name defaults to hostname-based detection
+#
+# Exit codes: 0=all pass, 1=partial fail, 2=severe fail
 
-# Exit codes
-# 0: All pass
-# 1: Partial fail (DEGRADED)
-# 2: Severe fail (unable to continue)
+set -uo pipefail
 
-set -euo pipefail
+ROOT="${1:-$HOME/joya}"
+AGENT_NAME="${2:-}"
+LIB="$ROOT/lib"
+MY="$ROOT/my"
 
-# Configuration
-JOY_ROOT="${JOY_ROOT:-/path/to/joy-agents}"  # Set this to actual root
-AGENT_DIR="$JOY_ROOT/instance/agents/$(whoami)"  # Assume agent name from user
-LOG_FILE="$JOY_ROOT/.joy/selfcheck.log"
+# Auto-detect agent name if not provided
+if [[ -z "$AGENT_NAME" ]]; then
+  # Look for agent dirs and pick first one with our hostname in identity
+  for d in "$MY"/agents/*/; do
+    [[ -d "$d" ]] || continue
+    [[ "$(basename "$d")" == "_shared" ]] && continue
+    AGENT_NAME="$(basename "$d")"
+    break
+  done
+fi
 
-# Parse arguments
-QUIET=0
-LOG=0
-EXTEND_ITEMS=()
-while [[ $# -gt 0 ]]; do
-  case $1 in
-    --quiet) QUIET=1; shift ;;
-    --log) LOG=1; shift ;;
-    --extend) shift; while [[ $# -gt 0 && ! $1 == --* ]]; do EXTEND_ITEMS+=("$1"); shift; done ;;
-    *) echo "Unknown option: $1"; exit 2 ;;
-  esac
-done
+AGENT_DIR="$MY/agents/$AGENT_NAME"
+OVERALL=0
+PASS=0
+FAIL=0
 
-# Function to perform a check and output
 check() {
   local name="$1"
-  local command="$2"
-  if eval "$command" &>/dev/null; then
-    result="✅"
-    status=0
+  shift
+  if "$@" 2>/dev/null; then
+    echo "  ✅ $name"
+    PASS=$((PASS + 1))
   else
-    result="❌"
-    status=1
-  fi
-  if [ $QUIET -eq 0 ]; then
-    echo "$result $name"
-  fi
-  return $status
-}
-
-# Log function
-log_result() {
-  if [ $LOG -eq 1 ]; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
+    echo "  ❌ $name"
+    FAIL=$((FAIL + 1))
+    return 1
   fi
 }
 
-# Perform checks
-overall_status=0
-check "协议文件加载" "test -r $JOY_ROOT/framework/core/AXIOMS.md && test -r $AGENT_DIR/IDENTITY.md" || overall_status=1
-check "通讯能力" "command -v agent-send-md >/dev/null" || overall_status=1  # Example: check if messaging tool exists
-check "文件读写能力" "touch $AGENT_DIR/test.tmp && rm $AGENT_DIR/test.tmp" || { overall_status=2; log_result "Severe: File RW failed"; }
-check "记忆加载" "test -r $AGENT_DIR/MEMORY.md" || overall_status=1
-check "工具/技能基线可用性" "command -v git >/dev/null" || overall_status=1  # Example: check for a basic tool like git
+echo "🔍 JOYA Self-Check"
+echo "   Root: $ROOT"
+echo "   Agent: $AGENT_NAME"
+echo ""
 
-# Extend items (instance-specific)
-for item in "${EXTEND_ITEMS[@]}"; do
-  # Placeholder: instance defines how to check these
-  check "$item" "true" || overall_status=1  # Replace with actual checks
-done
+# --- Protocol files ---
+echo "📋 Protocol"
+check "AXIOMS.md readable"       test -r "$LIB/core/AXIOMS.md"         || OVERALL=1
+check "RULES.md readable"        test -r "$LIB/core/RULES.md"          || OVERALL=1
+check "AGENT_INIT.md readable"   test -r "$LIB/AGENT_INIT.md"          || OVERALL=2
+echo ""
 
-# Log overall
-log_result "Self-check completed with status $overall_status"
+# --- Agent identity ---
+echo "📋 Agent identity"
+check "Agent dir exists"         test -d "$AGENT_DIR"                   || OVERALL=2
+check "IDENTITY.md readable"     test -r "$AGENT_DIR/IDENTITY.md"       || OVERALL=1
+check "MEMORY.md readable"       test -r "$AGENT_DIR/MEMORY.md"         || OVERALL=1
+echo ""
 
-# Exit with appropriate code
-if [ $overall_status -eq 2 ]; then
-  exit 2
-elif [ $overall_status -eq 1 ]; then
-  exit 1
+# --- File I/O ---
+echo "📋 File I/O"
+if check "Write test" touch "$AGENT_DIR/.selfcheck.tmp"; then
+  rm -f "$AGENT_DIR/.selfcheck.tmp"
 else
-  exit 0
+  OVERALL=2
 fi
+echo ""
+
+# --- Instance config ---
+echo "📋 Instance config"
+check "PRINCIPAL.md exists"      test -f "$MY/shared/core/PRINCIPAL.md"  || OVERALL=1
+check "PLAYBOOK.md exists"       test -f "$MY/shared/core/PLAYBOOK.md"   || true
+check "INFRASTRUCTURE.md exists" test -f "$MY/shared/core/INFRASTRUCTURE.md" || true
+echo ""
+
+# --- Basic tools ---
+echo "📋 Tools"
+check "git available"            command -v git                          || OVERALL=1
+check "curl available"           command -v curl                         || true
+check "python3 available"        command -v python3                      || true
+echo ""
+
+# --- Summary ---
+TOTAL=$((PASS + FAIL))
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+if [[ $OVERALL -eq 0 ]]; then
+  echo "🎉 All $TOTAL checks passed!"
+elif [[ $OVERALL -eq 1 ]]; then
+  echo "⚠️  DEGRADED — $PASS/$TOTAL passed"
+else
+  echo "❌ SEVERE — $PASS/$TOTAL passed"
+fi
+
+exit $OVERALL

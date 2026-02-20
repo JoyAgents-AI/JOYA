@@ -85,7 +85,7 @@ setup_sandbox() {
   mkdir -p "$JOY_ROOT/lib/toolkit/scripts"
   mkdir -p "$JOY_ROOT/my/agents/testbot"
   mkdir -p "$JOY_ROOT/my/agents/_shared"
-  mkdir -p "$JOY_ROOT/my/shared/config"
+  mkdir -p "$JOY_ROOT/my/shared/core"
 
   echo "# JOYA — Agent Entry Point" > "$JOY_ROOT/lib/AGENT_INIT.md"
   echo "1.2.0" > "$JOY_ROOT/lib/VERSION"
@@ -106,6 +106,9 @@ EOF
   echo "# Principal" > "$JOY_ROOT/my/shared/core/PRINCIPAL.md"
   echo "# Playbook" > "$JOY_ROOT/my/shared/core/PLAYBOOK.md"
   echo "# Infrastructure" > "$JOY_ROOT/my/shared/core/INFRASTRUCTURE.md"
+  # Also create ROSTER and DIRECTORY
+  echo '| Agent | Role |' > "$JOY_ROOT/my/agents/ROSTER.md"
+  echo '{"agents":[]}' > "$JOY_ROOT/my/agents/DIRECTORY.json"
 
   cat > "$JOY_ROOT/my/agents/ROSTER.md" << 'EOF'
 # Roster
