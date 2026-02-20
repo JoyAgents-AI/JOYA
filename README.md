@@ -151,7 +151,7 @@ JOYA supports any language. After setup, tell your agent:
 
 Your agent will translate all framework docs using its own language capabilities — no extra API keys or dependencies needed. Translated files go to `i18n-<locale>/`, mirroring `core/`, `guides/`, and `examples/`.
 
-> **Note:** Translation will consume some tokens from your agent's model. The framework is ~50 files, so budget accordingly.
+> **Note:** Translation consumes tokens. The framework has ~50 files — your agent should automatically switch to a low-cost model (e.g. GPT-4o-mini, Gemini Flash, Haiku) for this task.
 
 ## Contributing
 
