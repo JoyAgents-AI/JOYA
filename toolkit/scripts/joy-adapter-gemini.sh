@@ -22,7 +22,7 @@ done
 [[ -z "$ACTION" ]] && { echo "Usage: joy-adapter-gemini.sh <install|uninstall|status> <agent-name> [--joy-root <path>] [--global]"; exit 1; }
 
 JOY_ROOT="${JOY_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
-AGENT_DIR="$JOY_ROOT/instance/agents/$AGENT_NAME"
+AGENT_DIR="$JOY_ROOT/my/agents/$AGENT_NAME"
 
 if [[ "$GLOBAL" == true ]]; then
   GEMINI_DIR="$HOME/.gemini"
@@ -82,7 +82,7 @@ Read: $JOY_ROOT/AGENT_INIT.md
 If this project has a .joy/ directory, read .joy/CONTEXT.md before starting work.
 
 ## Team
-Roster: $JOY_ROOT/instance/agents/ROSTER.md
+Roster: $JOY_ROOT/my/shared/agents/ROSTER.md
 
 ## Key Rules
 - **A2**: Confirm receipt before acting

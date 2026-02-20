@@ -27,7 +27,7 @@ done
 [[ -z "$ACTION" || -z "$AGENT_NAME" ]] && { echo "Usage: joy-adapter-claude-code.sh <install|uninstall|status> <agent-name> [--joy-root <path>]"; exit 1; }
 
 JOY_ROOT="${JOY_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
-AGENT_DIR="$JOY_ROOT/instance/agents/$AGENT_NAME"
+AGENT_DIR="$JOY_ROOT/my/agents/$AGENT_NAME"
 MARKER="$CLAUDE_DIR/.joy-adapter-claude-code"
 
 # =============================================================
@@ -129,8 +129,8 @@ Read: $JOY_ROOT/my/shared/core/PRINCIPAL.md
 Read: $JOY_ROOT/AGENT_INIT.md
 
 ## Team
-Roster: $JOY_ROOT/instance/agents/ROSTER.md
-Directory: $JOY_ROOT/instance/agents/DIRECTORY.json
+Roster: $JOY_ROOT/my/shared/agents/ROSTER.md
+Directory: $JOY_ROOT/my/shared/agents/DIRECTORY.json
 
 ## Infrastructure
 Read: $JOY_ROOT/my/shared/core/INFRASTRUCTURE.md
