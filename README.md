@@ -145,17 +145,11 @@ Email: ppurekid@gmail.com · michael@joyagents.ai
 
 ## Localization
 
-JOYA ships with a built-in translation tool. Generate a full localized copy of the framework in one command:
+JOYA supports any language. After setup, tell your agent:
 
-```bash
-# Translate to Simplified Chinese
-./toolkit/scripts/joy-translate.sh zhCN
+> **Translate the JOYA framework to Japanese** (or any language)
 
-# Translate to Japanese (force re-translate all files)
-./toolkit/scripts/joy-translate.sh jaJP --force
-```
-
-This creates an `i18n-<locale>/` directory mirroring `core/`, `guides/`, and `examples/` in the target language. Only changed files are re-translated on subsequent runs. Requires an `OPENAI_API_KEY` environment variable.
+Your agent will run the built-in translation tool and generate a localized copy under `i18n-<locale>/`, mirroring `core/`, `guides/`, and `examples/`. Only changed files are re-translated on subsequent runs.
 
 ## Contributing
 
