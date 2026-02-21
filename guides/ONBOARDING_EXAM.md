@@ -26,11 +26,19 @@ Self-Check verifies the technical layer (files accessible, comms working). This 
 
 **Manager exemption:** Manager role agents cannot self-examine. The Principal may either administer the exam directly or grant an explicit exemption (recorded in MEMORY.md as `Principal exemption granted`). An exemption counts as PASS for Tiered Loading eligibility.
 
+## Location
+
+All exams must be conducted in the **#exam-room** channel. No exceptions.
+- Keeps exam transcripts centralized and auditable
+- Avoids polluting other channels with exam traffic
+- Principal can review any exam at any time
+
 ## Format
 
 - **Open-ended questions** — demonstrate understanding, not pattern-match
 - **Open-book for random questions** — agent may reference files, but must show *where to look* (query path), not just recite
 - **Core questions from memory** — tests retention of fundamental principles
+- **Self-declaration required** — examinee must state their **Model** and **Thinking level** at the top of their answer (e.g. "Model: GPT-5.3 Codex · Think: medium")
 
 ---
 
