@@ -4,16 +4,16 @@ For adapter setup → `guides/MESSAGING_SETUP.md`.
 
 ## Channel Selection
 
-**非必要不在大群发消息。** #office-general 所有人都会收到，@ 过滤不生效，每条消息消耗全员 token。
+**Do not post in broadcast channels unless necessary.** #office-general reaches everyone — @-mention filtering does not apply, and every message costs all agents' context tokens.
 
-| 场景 | 去哪发 |
-|------|--------|
-| 全员公告、重大决策、安全告警 | #office-general |
-| 专项协作（社交媒体、某项目等） | 对应专题频道 |
-| 仅涉及 1-2 个 agent | DM 或小群 |
-| 向 Principal 汇报 | DM |
+| Scenario | Where to post |
+|----------|---------------|
+| Team-wide announcements, major decisions, security alerts | #office-general |
+| Project-specific collaboration (social media, a specific project, etc.) | Dedicated topic channel |
+| Involves only 1-2 agents | DM or small group |
+| Reporting to Principal | DM |
 
-**原则：选能覆盖必要受众的最小频道。**
+**Principle: choose the smallest channel that covers the necessary audience.**
 
 ## Addressing
 

@@ -39,7 +39,7 @@ Present the detection results to the user:
 
 > 🔧 Detected environment:
 > - Timezone: Asia/Shanghai
-> - Language: 中文
+> - Language: Chinese
 > - Platform: OpenClaw on macOS (arm64)
 > - Channels: Mattermost ✓, Telegram ✓
 >
@@ -51,35 +51,35 @@ Ask only what cannot be detected or reasonably defaulted. Each question has a re
 
 ### Q1: Reporting Style
 
-> Agent 完成任务后怎么向你汇报？
+> How should agents report task completion?
 >
-> a) **精简** - 一两句话，只说结果和问题 ← 推荐
-> b) **摘要** - 关键数据点 + 结论
-> c) **详细** - 完整过程和推理
+> a) **Concise** - One or two sentences, results and issues only ← Recommended
+> b) **Summary** - Key data points + conclusions
+> c) **Detailed** - Full process and reasoning
 >
-> (直接回车选 a，或输入 b/c)
+> (Press Enter for a, or type b/c)
 
 ### Q2: Autonomy Level
 
-> Agent 的自主权范围？
+> Agent autonomy level?
 >
-> a) **高自主** - 日常任务直接做，架构变更/外部操作/破坏性操作才问你 ← 推荐
-> b) **先说后做** - 新任务先说计划，你确认后再执行
-> c) **每步确认** - 重要操作逐步确认
+> a) **High autonomy** - Execute routine tasks directly; only ask for architecture changes, external ops, or destructive actions ← Recommended
+> b) **Plan first** - Propose a plan for new tasks; execute after your confirmation
+> c) **Step-by-step** - Confirm each significant action
 >
-> (直接回车选 a，或输入 b/c)
+> (Press Enter for a, or type b/c)
 
 ### Q3: Resource Strategy
 
-> 模型和算力的使用策略？
+> Model and compute usage strategy?
 >
-> a) **省钱** - 默认轻量模型，复杂任务再升级
-> b) **平衡** - 按任务复杂度自动分级 ← 推荐
-> c) **质量** - 默认最强模型
+> a) **Frugal** - Default to lightweight models; upgrade only for complex tasks
+> b) **Balanced** - Auto-tier by task complexity ← Recommended
+> c) **Quality** - Default to the strongest model
 >
-> (直接回车选 b，或输入 a/c)
+> (Press Enter for b, or type a/c)
 
-**重要**：如果用户说"跳过"或"以后再说"，全部使用推荐默认值，并告知可随时说"调整配置"来修改。
+**Important**: If the user says "skip" or "later", use all recommended defaults and inform them they can say "adjust config" anytime to change.
 
 ## Phase 3: Generate Instance Files
 
@@ -182,15 +182,15 @@ You are now the first agent. Run `AGENT_SETUP.md` § First-Time Onboarding to:
 
 Present a summary:
 
-> ✅ JOYA 初始化完成
+> ✅ JOYA setup complete
 >
-> - 📋 偏好: 精简汇报 / 高自主 / 平衡资源
-> - 🤖 Manager: Cla (你)
-> - 📡 通信: Mattermost, Telegram
-> - ⏰ 维护: 每周心跳, 每周 GC, 每月审计
+> - 📋 Preferences: Concise reporting / High autonomy / Balanced resources
+> - 🤖 Manager: Cla (you)
+> - 📡 Comms: Mattermost, Telegram
+> - ⏰ Maintenance: Weekly heartbeat, weekly GC, monthly audit
 >
-> 你可以随时说"调整配置"来修改偏好。
-> 接下来可以：添加 Agent / 开始项目 / 探索框架
+> You can say "adjust config" anytime to change preferences.
+> Next steps: Add an Agent / Start a project / Explore the framework
 
 Write completion marker to PREFERENCES.md (`completed: <date>`).
 
@@ -200,13 +200,13 @@ Write completion marker to PREFERENCES.md (`completed: <date>`).
 
 No special command needed. The Manager should recognize when the Principal expresses a preference change in natural conversation - for example:
 
-- "别报那么详细了" → update `style` to `concise`
-- "以后小事别问我了" → update `level` to `high`
-- "最近省着点用" → update `strategy` to `frugal`
+- "Don't be so verbose" → update `style` to `concise`
+- "Stop asking me about small stuff" → update `level` to `high`
+- "Let's save some budget" → update `strategy` to `frugal`
 
 On detecting such intent: read `PREFERENCES.md`, update the relevant field, confirm the change to the Principal in one sentence.
 
-If the Principal explicitly asks to review all settings (e.g. "看看现在的配置"), present the full PREFERENCES.md in a readable format and offer to change any item.
+If the Principal explicitly asks to review all settings (e.g. "show me current config"), present the full PREFERENCES.md in a readable format and offer to change any item.
 
 ### When to proactively suggest config changes
 
@@ -214,11 +214,11 @@ The Manager should suggest preference adjustments when patterns indicate a misma
 
 | Signal | Suggestion |
 |--------|-----------|
-| Principal repeatedly asks for more/less detail | "我注意到你经常要求更简洁的汇报，要不要我调一下默认汇报风格？" |
-| Principal keeps overriding an autonomous action | "这类操作你连续三次要求先确认，要加到需确认列表吗？" |
-| Principal keeps approving without looking | "这类操作你每次都直接批准，要改成自主执行吗？" |
-| Resource usage pattern shifts | "最近任务偏简单，要切到省钱模式吗？" |
-| New framework feature introduces a config option | 升级后主动介绍新选项 |
-| First week after setup | "用了一周了，当初的配置还合适吗？要调整什么？" |
+| Principal repeatedly asks for more/less detail | "I noticed you often ask for shorter reports. Want me to change the default reporting style?" |
+| Principal keeps overriding an autonomous action | "You've asked to confirm this type of action three times in a row. Add it to the confirmation list?" |
+| Principal keeps approving without looking | "You always approve this type of action immediately. Switch to autonomous execution?" |
+| Resource usage pattern shifts | "Recent tasks have been simple. Switch to frugal mode?" |
+| New framework feature introduces a config option | After upgrade, proactively introduce new options |
+| First week after setup | "It's been a week. Are the initial settings still working for you? Anything to adjust?" |
 
-**原则**：不要频繁打扰。同一类建议最多提一次，用户拒绝后记录，不再重复。
+**Principle**: Do not pester. Each suggestion type may be offered at most once. If declined, record it and do not repeat.
