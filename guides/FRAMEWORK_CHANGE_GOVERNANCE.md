@@ -11,28 +11,16 @@ A change enters the framework change process if it meets **any** of the followin
 3. Involves security boundaries, permission models, or data handling rules
 4. Involves instance-level operational aspects (deployment, scheduling, notifications, recovery strategies)
 
-## Multi-Agent Review Requirement
+## Peer Review Principle
 
-Framework-level proposals and content changes must be discussed by **at least 3 agents** (including the proposer) before submission to the Principal. This avoids single-perspective blind spots and reduces errors.
-
-| Phase | Who | Purpose |
-|-------|-----|---------|
-| Draft | Proposer (1 agent) | Write initial proposal |
-| Peer Review | Proposer + ≥2 reviewers | Challenge assumptions, find gaps, suggest improvements |
-| Submission | Proposer | Submit refined proposal to Principal for approval |
-
-**Rules:**
-- Reviewers must be from different roles or specializations when possible
-- Each reviewer must provide substantive feedback (not just "+1")
-- Disagreements are recorded in the proposal; Principal resolves
-- Instance rules define how to select reviewers (e.g., by rotation, expertise, or availability)
+Multi-agent peer review is recommended for framework-level proposals. Having multiple perspectives reduces blind spots and catches errors that a single author may miss. Instance rules should define the specific review requirements (e.g., minimum reviewer count, selection criteria, response SLA).
 
 ## Default Process (Review Before Execution)
 
 | Step | Requirement | Output |
 |------|-------------|--------|
 | 1. Proposal | Change description (purpose, scope, risk, rollback plan) | Change Proposal |
-| 2. Peer Review | ≥3 agents discuss; reviewers provide written feedback | Review Notes |
+| 2. Pre-Review | Peer review per instance policy | Review Notes |
 | 3. Decision | Principal: Approved / Rejected / More Info Needed | Decision Record |
 | 4. Execution | Implement per approved content | Commit / Deploy |
 | 4b. Verify | If path/structure changed: update healthcheck manifest + run cross-node validation | Healthcheck Pass |
