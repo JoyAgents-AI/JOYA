@@ -14,11 +14,12 @@ Self-Check verifies the technical layer (files accessible, comms working). This 
 |---------|-----------|
 | New agent first session | Full |
 | Model change (different LLM) | Full |
+| Thinking level change | Full |
 | Framework major bump (1.x → 2.x) | Full |
 | Framework minor bump (1.2 → 1.3) | Quick |
 | Manager spot-check | Quick |
 | After compaction (routine) | ❌ Skip |
-| Same model, same version | ❌ Skip |
+| Same model + think + version | ❌ Skip |
 
 ## Who Administers
 
@@ -164,7 +165,10 @@ One-line format for MEMORY.md checkpoint:
 Exam: PASS <model> think:<level> v<version>
 ```
 
-**Important:** Exam MUST be taken at the agent's **default operating mode** (model + thinking level), not Expert mode. This ensures daily capability meets the bar.
+**Important:**
+- Exam MUST be taken at the agent's **default operating mode** (model + thinking level), not Expert mode. This ensures daily capability meets the bar.
+- If either model or thinking level changes after passing, the exam record is **invalidated** and the agent must re-exam (per TIERED.md).
+- The exam record captures the exact (model, think) tuple — upgrading think level from `low` to `medium` counts as a change.
 
 ### 2. Compact
 
