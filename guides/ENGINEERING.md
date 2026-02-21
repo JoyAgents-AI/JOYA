@@ -20,6 +20,8 @@ Applies to projects with `type: engineering` or `mixed`. For project management 
 
 6. **Clean up after merge.** Delete feature branches, close linked tasks, and keep `main` deployable.
 
+7. **Framework content in English only.** All files under `$JOYA_LIB/` must be written in English. Chinese (or other languages) belong in `i18n-*/` directories only. Daily communication may use any language, but committed content must be English.
+
 ---
 
 ## Task ↔ Code Traceability
