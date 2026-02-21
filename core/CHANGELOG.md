@@ -6,6 +6,23 @@ Format: `YYYY-MM-DD — description`
 
 ---
 
+## v1.2.1 — 2026-02-21
+
+#### Security
+- **R4**: Added "External platform interactions" section — 4 principles for safe interaction on social media, forums, and community sites
+- Reviewed by: Kit (approve + edit suggestion), Eve (approve), Cla (proposer)
+- Kit's suggestion adopted: Point 3 changed from absolute prohibition to "unverified or raw" (framework flexibility; instances may enforce stricter rules)
+
+#### Engineering
+- **ENGINEERING.md**: Added rule #7 — Framework content must be English only (`i18n-*/` for translations)
+
+#### Governance
+- **FRAMEWORK_CHANGE_GOVERNANCE.md**: Added "Peer Review Principle" — recommends multi-agent review for proposals
+
+#### Fixes
+- **JOYA_SETUP.md**: Translated all Chinese UI text to English
+- **MESSAGING.md**: Translated channel selection rules to English
+
 ## v1.2.0 — 2026-02-19
 
 #### Structure
