@@ -36,6 +36,8 @@ This section runs on **every session start and after every compaction**.
 
 Context compaction = session restart — all previously loaded files are gone. Reload using the tiered system below.
 
+**Compaction recovery:** If `$JOYA_MY/agents/<your-name>/SESSION.md` exists and has content, read it first to recover in-progress work context. See `core/arch/COMPACTION_RESILIENCE.md` for the full protocol.
+
 **Determine your loading tier.** Check your `MEMORY.md` for an Onboarding Exam record.
 
 | Condition | Action |

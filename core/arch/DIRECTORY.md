@@ -21,7 +21,7 @@ joya/
 │   ├── core/                        # Mandatory (changes require Principal approval)
 │   │   ├── AXIOMS.md, RULES.md, ARCHITECTURE.md, ACCOUNTABILITY.md, CHANGELOG.md
 │   ├── guides/                      # How-to docs (any agent may update + notify)
-│   │   ├── MESSAGING.md, ENGINEERING.md, LIFECYCLE.md, TOOLKIT.md, ...
+│   │   ├── COMMUNICATION.md, ENGINEERING.md, LIFECYCLE.md, TOOLKIT.md, ...
 │   ├── examples/                    # Reference implementations (informational)
 │   └── toolkit/                     # Official tools (read-only for users)
 │       ├── adapters/, scripts/, skills/, starter/

@@ -33,4 +33,5 @@ Instance rules may extend or customize guides, but may never contradict protocol
 | `arch/SKILLS.md` | Three-layer tool resolution priority | When resolving tool/skill issues |
 | `arch/PROJECTS.md` | Project management capabilities | When starting a project |
 | `arch/MEMORY_LIFECYCLE.md` | Memory lifecycle: three-tier decay + GC rules | When writing memory / running GC |
+| `arch/COMPACTION_RESILIENCE.md` | Compaction defense: Write-Through, SESSION.md WAL, post-compaction self-check | Always (internalize); detail on-demand |
 | `arch/CUSTOMIZATION.md` | Instance customization mechanism | When customizing rules |

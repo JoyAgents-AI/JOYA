@@ -34,3 +34,7 @@ Agent memory (`$JOYA_MY/agents/<name>/memory/`) follows a **three-tier decay** m
 `MEMORY.md` should follow the same index-first pattern as other framework files:
 - Always loaded: Team roster, comms, pending items, sub-file index
 - On-demand: Infrastructure details, agent notes, lessons learned, historical sessions
+
+## Compaction Resilience
+
+Compaction is lossy — information only in conversation can be permanently lost. See `core/arch/COMPACTION_RESILIENCE.md` for the three-layer defense protocol (Write-Through, SESSION.md, Post-Compaction Self-Check).
