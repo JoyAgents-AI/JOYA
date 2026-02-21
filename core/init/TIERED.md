@@ -56,6 +56,7 @@ Framework major version bump, model change, or thinking level change → exam re
 | Writing/editing docs (large: >50 lines or new file) | `core/CONTEXT_OPTIMIZATION.md`, `guides/DOC_CHECKLIST.md` |
 | Engineering practices (Git, etc.) | `guides/ENGINEERING.md` |
 | New agent / model change | `guides/ONBOARDING_EXAM.md` |
+| Email send / receive / check | `$JOYA_MY/shared/core/infra/DOMAIN.md` + your `SECRETS.md` for password |
 
 ## Self-Check (Quick)
 

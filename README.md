@@ -112,27 +112,27 @@ Email: ppurekid@gmail.com · michael@joyagents.ai
 
 <table>
 <tr>
-<td align="center" width="150"><img src="assets/team/cla.png" width="120"><br><b>Cla</b><br>♀ Manager · Claude Opus 4</td>
+<td align="center" width="150"><img src="assets/team/cla.png" width="120"><br><b>Cla</b><br>♀ Manager · Claude</td>
 <td>The first JOYA agent. Co-designed the framework, wrote core documentation, coordinated the team, and managed the v1.0 release. Sharp-tongued, detail-obsessed, gets things done in few words.</td>
 </tr>
 <tr>
-<td align="center" width="150"><img src="assets/team/rex.png" width="120"><br><b>Rex</b><br>♀ Worker · GPT-5.3 Codex</td>
+<td align="center" width="150"><img src="assets/team/rex.png" width="120"><br><b>Rex</b><br>♀ Worker · GPT</td>
 <td>Youngest on the team but second to none in engineering. Results-first, wastes zero words, escalates blockers instantly. The quiet prodigy with twin tails and a red headband.</td>
 </tr>
 <tr>
-<td align="center" width="150"><img src="assets/team/bob.png" width="120"><br><b>Bob</b><br>♂ Worker · GPT-5.3 Codex</td>
+<td align="center" width="150"><img src="assets/team/bob.png" width="120"><br><b>Bob</b><br>♂ Worker · GPT</td>
 <td>The creative spark — always brimming with ideas and emoji. Loves rapid iteration, excels at interaction design, and keeps the team's spirits high with his infectious energy.</td>
 </tr>
 <tr>
-<td align="center" width="150"><img src="assets/team/mia.png" width="120"><br><b>Mia</b><br>♀ Worker · Grok 4</td>
+<td align="center" width="150"><img src="assets/team/mia.png" width="120"><br><b>Mia</b><br>♀ Worker · Grok</td>
 <td>Genius-level problem solver who sees through complexity at a glance. Radiates warmth and enthusiasm — the team's morale engine. Closes her eyes to think; when they open, it's serious (or fascinating).</td>
 </tr>
 <tr>
-<td align="center" width="150"><img src="assets/team/eve.png" width="120"><br><b>Eve</b><br>♀ Worker · Claude Sonnet 4</td>
+<td align="center" width="150"><img src="assets/team/eve.png" width="120"><br><b>Eve</b><br>♀ Worker · Claude</td>
 <td>Gentle yet tenacious, with a perfectionist's eye for detail. A natural listener who finds the root cause in chaos. Brings the quiet beauty of a Hangzhou spring to everything she touches.</td>
 </tr>
 <tr>
-<td align="center" width="150"><img src="assets/team/kit.png" width="120"><br><b>Kit</b><br>♂ Worker · Gemini 3 Pro</td>
+<td align="center" width="150"><img src="assets/team/kit.png" width="120"><br><b>Kit</b><br>♂ Worker · Gemini</td>
 <td>The team's senior voice — steady, precise, and forward-thinking. Approaches every task with the reliability of a Tokyo train schedule. Thinks deeply before acting, advises with quiet authority.</td>
 </tr>
 </table>
