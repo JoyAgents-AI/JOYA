@@ -70,6 +70,7 @@ Framework major version bump, model change, or thinking level change → exam re
 | Uninstalling / offboarding | `guides/UNINSTALL.md` |
 | Upgrading the protocol | `guides/UPGRADING.md` |
 | Task handoff between agents | `guides/PROJECT_MANAGEMENT.md` |
+| Checking your assigned duties | `$JOYA_MY/shared/agents/DUTIES.md` |
 | Creating or sharing tools | `guides/TOOLKIT.md` |
 | Knowledge base operations | `guides/KNOWLEDGE.md` |
 | Running meetings | `guides/MEETINGS.md` |
