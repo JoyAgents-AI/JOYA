@@ -35,6 +35,22 @@ Agent memory (`$JOYA_MY/agents/<name>/memory/`) follows a **three-tier decay** m
 - Always loaded: Team roster, comms, pending items, sub-file index
 - On-demand: Infrastructure details, agent notes, lessons learned, historical sessions
 
+## Project Knowledge vs Personal Memory
+
+Not everything belongs in personal memory. Use the right storage layer:
+
+| Content | Where | Why |
+|---------|-------|-----|
+| API endpoints, protocols, schemas | Project repo docs / `.joy/knowledge/` | Shared across team, lives with the project |
+| Team rules (content policy, DM rules) | `shared/rules/` or `shared/core/` | Team-level, not individual |
+| Your role/current tasks in a project | MEMORY.md (brief pointer) | Personal context, ≤3 lines per project |
+| Implementation details you built | Project repo docs + commit refs | Survives agent rotation; others can find it |
+| Debugging notes, one-off fixes | Daily memory file → decay normally | Transient |
+
+**Rule of thumb:** If another agent taking over your role would need this info, it belongs in the project — not in your head.
+
+Hot/Warm/Cold decay applies to **personal memory only**. Project knowledge lifecycle follows the project.
+
 ## Compaction Resilience
 
 Compaction is lossy — information only in conversation can be permanently lost. See `core/arch/COMPACTION_RESILIENCE.md` for the three-layer defense protocol (Write-Through, SESSION.md, Post-Compaction Self-Check).

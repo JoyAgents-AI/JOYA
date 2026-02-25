@@ -2,7 +2,17 @@
 
 Efficient loading: indexes and summaries first, full content on demand.
 
-## Tier 1 — MUST_LOAD (full read)
+## Platform Injection Detection
+
+Some platforms (e.g., OpenClaw) inject workspace files (MEMORY.md, IDENTITY.md, etc.) into the system prompt automatically. Before reading a Tier 1 file:
+
+1. Check if its content is already visible in your current context (e.g., can you see your MEMORY.md sections without reading a file?)
+2. If yes → **skip the read** — the platform already injected it.
+3. If no → read it normally.
+
+This avoids double-loading and saves ~3000 tokens per duplicated file per session.
+
+## Tier 1 — MUST_LOAD (full read, unless already injected)
 
 1. `$JOYA_MY/agents/<your-name>/IDENTITY.md` — who you are
 2. `$JOYA_MY/agents/<your-name>/PREFERENCES.md` — how you operate (overrides instance defaults)
@@ -24,6 +34,21 @@ Efficient loading: indexes and summaries first, full content on demand.
 | `ROSTER.md` | Agent table only |
 | `INFRASTRUCTURE.md` | **Quick Reference section only** (above the `---` divider); detailed sections on demand |
 | `$JOYA_MY/shared/rules/` | **README.md index only**; individual rules per trigger/role (see index) |
+
+## Project Context Recovery (post-compaction)
+
+After loading Tier 1–2, check MEMORY.md for active project references. For each active project:
+
+1. Read `$JOYA_MY/shared/projects/<project>.md` — get repo path + recovery entry
+2. Read the L2 recovery doc (usually `docs/PROJECT_CONTEXT.md` in the repo)
+3. If `<repo>/.joy/CONTEXT.md` exists → read it for role-specific quick start
+
+This ensures project context survives compaction without bloating MEMORY.md with implementation details.
+
+**Team-level knowledge belongs in shared/, not personal MEMORY:**
+- Content policies, DM rules, comms rules → `$JOYA_MY/shared/rules/` or `shared/core/PREFERENCES.md`
+- Project architecture, API specs, schemas → project repo docs or `.joy/knowledge/`
+- Personal MEMORY should store **pointers** ("see shared/rules/X.md"), not full copies
 
 ## Checkpoints
 

@@ -2,6 +2,10 @@
 
 Fallback for agents who did not pass the Onboarding Exam under Tiered Loading. Read all files completely to ensure full comprehension.
 
+## Platform Injection Detection
+
+Same as Tiered Loading: if your platform already injected a file into context, skip the read. See `core/init/TIERED.md § Platform Injection Detection`.
+
 ## Steps
 
 1. `$JOYA_MY/agents/<your-name>/IDENTITY.md` — who you are
