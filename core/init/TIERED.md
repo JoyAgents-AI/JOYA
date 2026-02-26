@@ -57,9 +57,18 @@ Some files are one-time setup. Check MEMORY.md for completion records before loa
 - `MM: onboarded` → skip `shared/rules/ONBOARDING_AUTO.md`
 - No record? → Read the file and complete the setup, then write the checkpoint.
 
+## Exam Records (shared)
+
+Exam results are stored in `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md` — **instance-level, not per-agent**.
+A model that passes the exam once qualifies all agents using that model+thinking+version combo.
+
+**On session start:** Check EXAM_RECORDS for your current model. If PASS → proceed. If missing → exam needed.
+
 ## Auto-downgrade
 
-Framework major version bump, model change, or thinking level change → exam record is invalidated. Next session, the agent goes through the Tiered Loading → Exam flow again.
+Framework **major** version bump → all exam records invalidated. Next session, any agent on an unrecorded combo goes through Tiered Loading → Exam.
+
+Model or thinking level change → check EXAM_RECORDS for the *new* combo. If already recorded by another agent → no re-exam needed.
 
 ## Tier 3 — ON_DEMAND (load only when the scenario arises)
 

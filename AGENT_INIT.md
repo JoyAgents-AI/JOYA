@@ -38,22 +38,24 @@ Context compaction = session restart — all previously loaded files are gone. R
 
 **Compaction recovery:** If `$JOYA_MY/agents/<your-name>/SESSION.md` exists and has content, read it first to recover in-progress work context. See `core/arch/COMPACTION_RESILIENCE.md` for the full protocol.
 
-**Determine your loading tier.** Check your `MEMORY.md` for an Onboarding Exam record.
+**Determine your loading tier.** Check `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md` for your current model.
 
 | Condition | Action |
 |-----------|--------|
-| `Exam: PASS <model> think:<level> v<version>` exists, model + thinking level + major.minor match | Read `core/init/TIERED.md` → follow it → work |
-| `Exam: FAIL <model> think:<level> v<version>` exists, same model + thinking | Read `core/init/FULL.md` → follow it → work |
-| No exam record, or different model/thinking/version from any record | Read `core/init/TIERED.md` → follow it → take the Onboarding Exam (see below) |
+| EXAM_RECORDS has `PASS` for your model + thinking + major.minor | Read `core/init/TIERED.md` → follow it → work |
+| EXAM_RECORDS has `FAIL` for your model + thinking | Read `core/init/FULL.md` → follow it → work |
+| No matching record in EXAM_RECORDS | Read `core/init/TIERED.md` → follow it → take the Onboarding Exam (see below) |
+
+Exam records are **instance-level (shared)** — a model that passes once benefits all agents using it.
 
 **Onboarding Exam flow (no matching record):**
 
 1. Load via `core/init/TIERED.md` (indexes and summaries only)
 2. Take the exam (`guides/ONBOARDING_EXAM.md`) — tests whether you can operate correctly with only tiered-loaded content
-3. **PASS** → Write `Exam: PASS <model> think:<level> v<framework-version>` to MEMORY.md. Future sessions use Tiered Loading only.
-4. **FAIL** → Write `Exam: FAIL <model> think:<level> v<framework-version>` to MEMORY.md. Read `core/init/FULL.md` to load everything for this session. Future sessions with the same model+thinking go directly to Full Loading (no re-test — the model has proven it needs full content).
+3. **PASS** → Add row to `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md`. Future sessions (any agent, same model) use Tiered Loading only.
+4. **FAIL** → Add row to `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md`. Read `core/init/FULL.md` to load everything for this session. Future sessions with the same model+thinking go directly to Full Loading (no re-test — the model has proven it needs full content).
 
-> **Design rationale:** The exam tests whether Tiered Loading is *sufficient* for your model — not whether you understood after reading everything. A PASS proves summaries are enough; a FAIL proves this model needs full content every session. Retesting the same model wastes tokens on a predictably identical outcome. A new model, thinking level change, or framework major version invalidates all prior records.
+> **Design rationale:** The exam tests whether Tiered Loading is *sufficient* for a model — not for a specific agent. A PASS proves summaries are enough; a FAIL proves this model needs full content. Retesting the same model on a different agent wastes tokens on a predictably identical outcome. Framework major version invalidates all records.
 
 > **Note:** Manager role agents may hold a Principal-granted exemption in lieu of an exam. See `guides/ONBOARDING_EXAM.md` § Who Administers.
 

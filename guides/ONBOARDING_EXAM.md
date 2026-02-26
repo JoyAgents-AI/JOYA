@@ -148,27 +148,23 @@ Any of these → automatic fail, re-read protocol, re-exam:
 
 ### 1. Record Results (before compact)
 
-Manager writes to agent's `MEMORY.md`:
+Manager adds a row to `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md`:
 
 ```markdown
-## Onboarding Exam (YYYY-MM-DD)
-- Result: Pass / Conditional Pass
-- Model: <model name>
-- Thinking: <level> (low/medium/high)
-- Framework: v<version>
-- Administered by: <Manager name>
-- Notes: <corrections if any>
+| <model> | <thinking> | <version> | PASS/FAIL | <date> | <notes> |
 ```
 
-One-line format for MEMORY.md checkpoint:
+Exam records are **instance-level (shared)** — a model that passes once benefits all agents using it. No per-agent exam records needed.
+
+Agents may keep a short pointer in their own MEMORY.md for quick reference:
 ```
-Exam: PASS <model> think:<level> v<version>
+Exam: → shared/knowledge/EXAM_RECORDS.md
 ```
 
 **Important:**
 - Exam MUST be taken at the agent's **default operating mode** (model + thinking level), not Expert mode. This ensures daily capability meets the bar.
-- If either model or thinking level changes after passing, the exam record is **invalidated** and the agent must re-exam (per TIERED.md).
-- The exam record captures the exact (model, think) tuple — upgrading think level from `low` to `medium` counts as a change.
+- If an agent switches to a model+thinking combo not yet in EXAM_RECORDS, one exam is needed — the result then covers all agents on that combo.
+- Framework **major** version bump invalidates all records.
 
 ### 2. Compact
 
