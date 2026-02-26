@@ -68,7 +68,7 @@ A model that passes the exam once qualifies all agents using that model+thinking
 
 Framework **major** version bump → all exam records invalidated. Next session, any agent on an unrecorded combo goes through Tiered Loading → Exam.
 
-Model or thinking level change → check EXAM_RECORDS for the *new* combo. If already recorded by another agent → no re-exam needed.
+Model change → check EXAM_RECORDS for the new model. Thinking level change → upward-compatible (PASS at `low` covers `medium`+`high`+`xhigh`; only downward needs a new record). See EXAM_RECORDS.md.
 
 ## Tier 3 — ON_DEMAND (load only when the scenario arises)
 

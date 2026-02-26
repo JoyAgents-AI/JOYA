@@ -42,11 +42,11 @@ Context compaction = session restart — all previously loaded files are gone. R
 
 | Condition | Action |
 |-----------|--------|
-| EXAM_RECORDS has `PASS` for your model + thinking + major.minor | Read `core/init/TIERED.md` → follow it → work |
-| EXAM_RECORDS has `FAIL` for your model + thinking | Read `core/init/FULL.md` → follow it → work |
+| EXAM_RECORDS has `PASS` for your model at same or lower thinking level | Read `core/init/TIERED.md` → follow it → work |
+| EXAM_RECORDS has `FAIL` for your model at same or higher thinking level | Read `core/init/FULL.md` → follow it → work |
 | No matching record in EXAM_RECORDS | Read `core/init/TIERED.md` → follow it → take the Onboarding Exam (see below) |
 
-Exam records are **instance-level (shared)** — a model that passes once benefits all agents using it.
+Exam records are **instance-level (shared)** — a model that passes once benefits all agents using it. Thinking levels are upward-compatible: PASS at `low` covers `medium`/`high`/`xhigh` (see EXAM_RECORDS.md).
 
 **Onboarding Exam flow (no matching record):**
 

@@ -163,7 +163,8 @@ Exam: → shared/knowledge/EXAM_RECORDS.md
 
 **Important:**
 - Exam MUST be taken at the agent's **default operating mode** (model + thinking level), not Expert mode. This ensures daily capability meets the bar.
-- If an agent switches to a model+thinking combo not yet in EXAM_RECORDS, one exam is needed — the result then covers all agents on that combo.
+- If an agent switches to a model not yet in EXAM_RECORDS, one exam is needed — the result then covers all agents on that model.
+- Thinking is upward-compatible: PASS at `low` covers `medium`/`high`/`xhigh`. Only a *downward* change (e.g. `medium` → `off`) needs checking.
 - Framework **major** version bump invalidates all records.
 
 ### 2. Compact
