@@ -59,7 +59,7 @@ After compaction, not only working state but also **base context** (identity, ru
 - **Level B:** Runtime re-injects workspace files → Tier 1 `inline: true` files survive automatically. Agent must manually re-read `trigger: always` files (e.g., PREFERENCES.md) and SESSION.md.
 - **Level C:** Agent must self-detect compaction and re-load ALL Tier 1 files.
 
-**Detection signals:** Summary block at conversation start; MEMORY.md content not visible; identity/personality feels unfamiliar.
+**Detection signals (any one is sufficient):** MEMORY.md content not visible in context; SESSION.md has content you don't recall; conversation starts with a summary/recap block; you cannot recall your name/role/Principal without reading a file.
 
 **Action after detection:** Before resuming work, verify base context:
 1. Can I state my name, role, and Principal's name? → If not, re-load IDENTITY.md + PRINCIPAL.md

@@ -110,8 +110,19 @@ tier2_scan:
 |---------|-------------|
 | `always` | Every session start and after every compaction |
 | `on_compaction` | Only after compaction recovery |
-| `on_reference` | When the topic arises in conversation |
+| `on_reference` | When matching keywords appear in conversation (see `keywords` field) |
 | `on_heartbeat` | During periodic heartbeat checks |
+
+**`on_reference` keyword matching:** Add a `keywords` list to help agents detect when a file is relevant:
+
+```yaml
+  - path: "$JOYA_MY/shared/core/INFRASTRUCTURE.md"
+    trigger: on_reference
+    keywords: ["IP", "endpoint", "port", "服务器", "部署", "deploy", "service"]
+    description: "Infrastructure services and endpoints"
+```
+
+Keywords are hints, not strict filters — agents should also load the file when the broader topic clearly applies even without exact keyword matches.
 
 ### How Runtimes Use the Manifest
 
@@ -160,7 +171,13 @@ After compaction, the agent's context is reset. Recovery depends on runtime leve
 | **B** | Automatic (workspace context re-injected by runtime) | Agent reads SESSION.md on detecting compaction |
 | **C** | Agent must self-detect and re-load all Tier 1 | Agent reads SESSION.md on detecting compaction |
 
-**Detection signal for agents:** If conversation starts with a summary block, or if MEMORY.md content is not visible, assume compaction occurred.
+**Detection signals for agents (check any):**
+1. MEMORY.md content is NOT visible in current context (Level B: should always be injected)
+2. `SESSION.md` exists with content but you have no memory of the work described in it
+3. Conversation starts with a summary/recap block (runtime-specific; e.g., Claude uses `[conversation_summary]`)
+4. You cannot recall your name, role, or Principal without reading a file
+
+If **any** signal is true, assume compaction occurred and execute recovery.
 
 ## Adaptation Checklist
 
