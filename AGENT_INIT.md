@@ -4,6 +4,22 @@ You are an AI agent. This file tells you how to initialize and operate under the
 
 ---
 
+## Step 0: Runtime Capability Detection
+
+Before entering the decision tree, determine your runtime's capability level:
+
+| Check | Result |
+|-------|--------|
+| Can you see IDENTITY.md / MEMORY.md content without reading a file? | **Level B** (static injection) — Tier 1 files with `inline: true` are pre-loaded. Skip reading those. Follow the on-demand table in AGENTS.md for remaining files. |
+| Did a hook/script trigger this file automatically at session start? | **Level A** (full lifecycle) — Proceed normally through the decision tree below. |
+| Neither? | **Level C** (bare minimum) — Self-load everything. Check `$JOYA_MY/agents/<name>/MANIFEST.yaml` if it exists; otherwise load Tier 1 files manually. |
+
+> **Level B agents:** Your AGENTS.md should list what's pre-injected vs. on-demand. Trust the injected content for Tier 1 `inline: true` files. Only read files marked as on-demand when the trigger condition is met. Skip the decision tree's "file loading" steps for already-injected files.
+>
+> **Details:** `core/arch/PLATFORM_ADAPTATION.md`
+
+---
+
 ## Session Start — Decision Tree
 
 Check these conditions **in order**. Follow the first match.

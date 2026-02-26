@@ -34,4 +34,5 @@ Instance rules may extend or customize guides, but may never contradict protocol
 | `arch/PROJECTS.md` | Project management capabilities | When starting a project |
 | `arch/MEMORY_LIFECYCLE.md` | Memory lifecycle: three-tier decay + GC rules | When writing memory / running GC |
 | `arch/COMPACTION_RESILIENCE.md` | Compaction defense: Write-Through, SESSION.md WAL, post-compaction self-check | Always (internalize); detail on-demand |
+| `arch/PLATFORM_ADAPTATION.md` | Runtime capability levels (A/B/C), loading manifest, bridge file standard | When adapting to a new runtime or debugging loading issues |
 | `arch/CUSTOMIZATION.md` | Instance customization mechanism | When customizing rules |
