@@ -21,6 +21,11 @@ Agent memory (`$JOYA_MY/agents/<name>/memory/`) follows a **three-tier decay** m
 
 - **Session end**: When writing daily memory, check for files eligible for Warm/Cold transitions.
 - **Heartbeat** (optional): Periodic GC as a heartbeat task.
+- **Manager 指令 "压缩记忆"**: 执行完整压缩流程 → 读 `$JOYA_MY/shared/knowledge/MEMORY_MAINTENANCE.md`
+
+## Operations SOP
+
+具体操作步骤（文件记忆压缩 + LanceDB 向量记忆维护）→ **`$JOYA_MY/shared/knowledge/MEMORY_MAINTENANCE.md`**
 
 ## MEMORY.md Hygiene
 
