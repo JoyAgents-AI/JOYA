@@ -12,7 +12,7 @@ The knowledge base captures durable insights from project work and iteration ret
 
 | Level | Location | Scope |
 |-------|----------|-------|
-| Project-specific | `<project>/.joy/knowledge/` | Lessons tied to one project |
+| Project-specific | Project repo docs or `shared/projects/<project>/` | Lessons tied to one project |
 | Cross-project | `$JOYA_MY/shared/knowledge/` | Lessons applicable across all projects |
 
 ## Directory Structure

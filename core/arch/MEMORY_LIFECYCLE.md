@@ -41,7 +41,7 @@ Not everything belongs in personal memory. Use the right storage layer:
 
 | Content | Where | Why |
 |---------|-------|-----|
-| API endpoints, protocols, schemas | Project repo docs / `.joy/knowledge/` | Shared across team, lives with the project |
+| API endpoints, protocols, schemas | Project repo docs | Shared across team, lives with the project |
 | Team rules (content policy, DM rules) | `shared/rules/` or `shared/core/` | Team-level, not individual |
 | Your role/current tasks in a project | MEMORY.md (brief pointer) | Personal context, ≤3 lines per project |
 | Implementation details you built | Project repo docs + commit refs | Survives agent rotation; others can find it |

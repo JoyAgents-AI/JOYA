@@ -4,7 +4,7 @@ Official tools shipped with the framework. Users don't modify these — override
 
 ## scripts/
 
-- `joy-init.sh` — Initialize `.joy/` directory in a project
+- `joy-init.sh` — Initialize project registration in `shared/projects/`
 - `joy-validate.sh` — Validate instance against the protocol
 - `joy-translate.sh` — Translate framework documents
 - `selfcheck.sh` — Agent self-check script

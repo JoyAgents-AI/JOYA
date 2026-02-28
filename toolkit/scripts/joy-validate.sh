@@ -138,15 +138,7 @@ if [[ -d "$MY/shared/projects" ]]; then
   for proj_dir in "$MY"/shared/projects/*/; do
     [[ -d "$proj_dir" ]] || continue
     proj_name=$(basename "$proj_dir")
-    [[ -f "$proj_dir/META.md" ]]  && pass "Project $proj_name: META.md exists"  || warn "Project $proj_name: META.md missing"
-    [[ -f "$proj_dir/PATHS.md" ]] && pass "Project $proj_name: PATHS.md exists" || warn "Project $proj_name: PATHS.md missing"
-
-    if [[ -f "$proj_dir/PATHS.md" ]]; then
-      proj_root=$(grep -m1 "^root:" "$proj_dir/PATHS.md" 2>/dev/null | sed 's/root:[[:space:]]*//' || true)
-      if [[ -n "$proj_root" && -d "$proj_root" ]]; then
-        [[ -d "$proj_root/.joy" ]] && pass "Project $proj_name: .joy/ exists at $proj_root" || warn "Project $proj_name: .joy/ missing at $proj_root — run joy-init.sh"
-      fi
-    fi
+    [[ -f "$proj_dir/README.md" ]] && pass "Project $proj_name: README.md exists" || warn "Project $proj_name: README.md missing"
   done
 else
   warn "my/shared/projects/ missing"

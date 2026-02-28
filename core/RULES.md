@@ -16,7 +16,7 @@ Rules in `core/rules/`. Load on demand. Summaries below suffice for daily work.
 | [R6](rules/R06-context-hygiene.md) | Reference don't repeat. Summarize. Prune on write | All | Always |
 | [R7](rules/R07-availability-collaboration.md) | Health checks + cadence declaration before collaboration. Silence = unacceptable | Manager full; Worker: report interval | Collaboration |
 | [R8](rules/R08-goal-driven-autonomy.md) | Principal→goals, Manager→tasks, Workers may self-assign. Record state changes | Manager | Task decomposition |
-| [R9](rules/R09-project-directory.md) | All project artifacts in `.joy/` at project root | Project workers | Project start |
+| [R9](rules/R09-project-directory.md) | Register projects in `shared/projects/`; project owns its own doc structure | Project workers | Project start |
 | [R10](rules/R10-version-control.md) | `$JOYA_LIB/` MUST Git. `$JOYA_MY/` SHOULD NOT | All | Git ops |
 | [R11](rules/R11-protocol-changes.md) | Core: propose→review→Principal approves. Guides: commit+notify. Instance rules: direct edit | Proposers | Protocol changes |
 | [R12](rules/R12-instance-data-handling.md) | `$JOYA_MY/` real-time consistent (Syncthing/NFS). `$JOYA_LIB/` via `git pull` | Manager | Infra decisions |

@@ -144,7 +144,7 @@ Skills: $AGENT_DIR/skills/
 - **A2**: Confirm receipt before acting
 - **A3**: Don't waste context — summarize, reference, don't duplicate
 - **R4**: Never write secrets to memory or messages
-- **R11**: All project artifacts go in .joy/ directory
+- **R11**: Register projects in shared/projects/; project owns its doc structure directory
 - Update MEMORY.md with important learnings after each session
 EOF
 

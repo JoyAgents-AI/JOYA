@@ -59,7 +59,7 @@ Every framework change must include:
 - Rollback owner
 - Verification checkpoints (how to confirm recovery after rollback)
 
-Review conclusions and execution results are archived under `.joy/governance/`.
+Review conclusions and execution results are archived under `$JOYA_MY/shared/knowledge/`.
 
 ## Governance Mode
 

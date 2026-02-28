@@ -79,7 +79,7 @@ Read: $JOY_ROOT/my/shared/core/PRINCIPAL.md
 Read: $JOY_ROOT/AGENT_INIT.md
 
 ## Project
-If this project has a .joy/ directory, read .joy/CONTEXT.md before starting work.
+Check shared/projects/ for project registration before starting work.
 
 ## Team
 Roster: $JOY_ROOT/my/shared/agents/ROSTER.md
@@ -88,7 +88,7 @@ Roster: $JOY_ROOT/my/shared/agents/ROSTER.md
 - **A2**: Confirm receipt before acting
 - **A3**: Don't waste context — summarize, reference, don't duplicate
 - **R4**: Never write secrets to memory or messages
-- **R11**: All project artifacts go in .joy/
+- **R11**: Register projects in shared/projects/; project owns its doc structure
 - Update MEMORY.md with important learnings after each session
 EOF
 

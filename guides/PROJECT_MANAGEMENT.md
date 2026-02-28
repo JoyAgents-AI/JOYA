@@ -49,11 +49,11 @@ Each task has a clear **deliverable** — what "done" looks like.
 
 ---
 
-## 4. The `.joy/` Directory (R9)
+## 4. Project Registration (R9)
 
-Every project MUST have a `.joy/` directory in its root. This is the project's structured home for metadata, context, knowledge, and task tracking.
+Every project must be registered in `$JOYA_MY/shared/projects/` with a `README.md` containing the repo URL, clone command, and loading entry point.
 
-Non-code projects without a repo may place `.joy/` under the instance project registry.
+The project's own documentation structure is decided by the project — the framework does not prescribe a specific layout. Non-code projects without a repo may keep their docs directly under the `shared/projects/<name>/` directory.
 
 ---
 
@@ -74,7 +74,7 @@ Non-code projects without a repo may place `.joy/` under the instance project re
 
 Iterations are time-boxed: **plan → execute → review → learn**.
 
-The instance decides cadence (daily, weekly, bi-weekly). The Manager maintains the rhythm. Durable lessons go to `.joy/knowledge/` or `$JOYA_MY/shared/knowledge/`.
+The instance decides cadence (daily, weekly, bi-weekly). The Manager maintains the rhythm. Durable lessons go to agent memory or `$JOYA_MY/shared/knowledge/`.
 
 ---
 
@@ -95,8 +95,10 @@ For a file-based reference implementation, see [`examples/pm-file-based.md`](../
 
 ## 8. Agent Join Order
 
-When joining a project, read in order:
-META.md → PATHS.md → PROJECT.md → CONTEXT.md → knowledge → tasks.
+When joining a project:
+1. Read `$JOYA_MY/shared/projects/<project>/README.md` — get repo URL and loading entry point
+2. Clone the repo if needed
+3. Follow the loading entry point in the repo
 
 ---
 

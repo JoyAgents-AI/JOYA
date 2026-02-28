@@ -39,15 +39,14 @@ This avoids double-loading and saves ~3000 tokens per duplicated file per sessio
 
 After loading Tier 1–2, check MEMORY.md for active project references. For each active project:
 
-1. Read `$JOYA_MY/shared/projects/<project>.md` — get repo path + recovery entry
-2. Read the L2 recovery doc (usually `docs/PROJECT_CONTEXT.md` in the repo)
-3. If `<repo>/.joy/CONTEXT.md` exists → read it for role-specific quick start
+1. Read `$JOYA_MY/shared/projects/<project>/README.md` — get repo URL + loading entry point
+2. Clone the repo if needed, then follow the loading entry point specified in the README
 
 This ensures project context survives compaction without bloating MEMORY.md with implementation details.
 
 **Team-level knowledge belongs in shared/, not personal MEMORY:**
 - Content policies, DM rules, comms rules → `$JOYA_MY/shared/rules/` or `shared/core/PREFERENCES.md`
-- Project architecture, API specs, schemas → project repo docs or `.joy/knowledge/`
+- Project architecture, API specs, schemas → project repo docs (structure decided by the project)
 - Personal MEMORY should store **pointers** ("see shared/rules/X.md"), not full copies
 
 ## Checkpoints

@@ -12,11 +12,11 @@ Applies to projects with `type: engineering` or `mixed`. For project management 
 
 2. **Make changes reviewable.** Use pull requests or an equivalent review mechanism. Cross-review between workers; Manager holds final merge authority (R3).
 
-3. **Branch strategy is a project decision.** The protocol doesn't prescribe a branching model. Common patterns: `main` + feature branches, trunk-based, gitflow. Choose what fits the project and document it in `.joy/CONTEXT.md`.
+3. **Branch strategy is a project decision.** The protocol doesn't prescribe a branching model. Common patterns: `main` + feature branches, trunk-based, gitflow. Choose what fits the project and document it in the project's own docs.
 
 4. **Commit with intent.** Use conventional commit messages (`feat:`, `fix:`, `docs:`, etc.) and reference task IDs for traceability. Keep commits atomic and meaningful.
 
-5. **Test and automate.** Testing and CI are recommended. The level of coverage and automation is a project-level decision — define expectations in `.joy/CONTEXT.md`.
+5. **Test and automate.** Testing and CI are recommended. The level of coverage and automation is a project-level decision — define expectations in the project's own docs.
 
 6. **Clean up after merge.** Delete feature branches, close linked tasks, and keep `main` deployable.
 
@@ -47,7 +47,7 @@ Use Architecture Decision Records to document significant engineering decisions.
 
 ### Format
 
-Store ADRs in `.joy/decisions/NNNN-<title>.md`:
+Store ADRs in the project's docs directory (e.g. `docs/adr/NNNN-<title>.md`):
 
 ```markdown
 # NNNN. <Title>
@@ -98,7 +98,7 @@ These belong in `$JOYA_MY/shared/rules/`, not in protocol.
 
 ## Project Conventions
 
-Each project should document its own engineering conventions in `.joy/CONTEXT.md`:
+Each project should document its own engineering conventions in its docs (structure is up to the project):
 
 - Branching model and naming scheme
 - Code style and linting rules

@@ -2,4 +2,4 @@
 
 Three capabilities: Task Management, Goal Tracking, Iteration Cycles.
 
-Default adapter is Markdown (`.joy/` directory at project root). External tools (Plane, GitHub, etc.) configured in `PLAYBOOK.md`. See `guides/PROJECT_MANAGEMENT.md` for details.
+Projects are registered in `$JOYA_MY/shared/projects/` (see R9). Each project owns its own documentation structure — the framework does not prescribe a specific layout. External tools (Huly, GitHub Issues, etc.) can be configured per project. See `guides/PROJECT_MANAGEMENT.md` for details.

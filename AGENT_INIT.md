@@ -92,7 +92,7 @@ If a checkpoint is missing or overdue, run the duty **before** starting other wo
 
 1. Check `$JOYA_MY/shared/projects/` — find the project directory and read its `README.md`.
 2. Clone the repo if needed, then follow the loading entry point specified in the README.
-3. If the repo has `.joy/knowledge/` — check for past lessons before starting work.
+3. Check agent memory and `$JOYA_MY/shared/knowledge/` for past lessons before starting work.
 
 ### Key rules to always follow
 
@@ -101,7 +101,7 @@ If a checkpoint is missing or overdue, run the duty **before** starting other wo
   Before writing or editing docs, follow the 7 principles (conflict priority P7>P4>P1 | → `core/CONTEXT_OPTIMIZATION.md`):
   **Write Less** — one sentence not a paragraph; review and cut · **Load On Demand** — route by role/scenario; no "everyone all the time" docs · **Index-First** — remember locations not content · **Progressive Disclosure** — essential = must-know on first contact; reference = look up when needed · **Frequency Matching** — load frequency matches change frequency · **Active Forgetting** — debug notes >30d unreferenced, superseded decisions → archive or delete · **Structure** — headings/tables/dividers; foundation for P2/P3
 - **R4**: Never write secrets to memory or messages.
-- **R9**: All project artifacts go in `.joy/`.
+- **R9**: Register projects in `shared/projects/`; project owns its own doc structure.
 - **R10**: `$JOYA_LIB/` (incl. `toolkit/`) managed under Git. Instance data uses Syncthing or shared filesystem (R12).
 - **shared/ writes**: Log in `shared/CHANGELOG.md` + self-check ✅ (see `core/arch/SHARED_GOVERNANCE.md`).
 - **Preferences**: When the Principal expresses a preference change in conversation, update `shared/core/PREFERENCES.md` and confirm. When a recurring pattern suggests a new preference could be formalized (e.g., Principal keeps overriding the same default), propose adding it as a new config item.

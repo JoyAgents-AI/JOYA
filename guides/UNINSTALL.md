@@ -24,7 +24,7 @@ When the Principal wants to stop using JOYA entirely:
 Before removing anything, the Manager should:
 
 - Export each agent's `IDENTITY.md`, `MEMORY.md`, and `RELATIONSHIPS.md` to standalone locations outside the JOYA directory.
-- Export project knowledge: copy `.joy/knowledge/` contents to each project's own docs.
+- Export project knowledge: copy any project-specific knowledge from `shared/projects/` or `shared/knowledge/` to each project's own docs.
 - Export cross-project knowledge: save `$JOYA_MY/shared/knowledge/` somewhere accessible.
 
 ### Step 2: Disconnect agents
@@ -40,10 +40,10 @@ For each agent, remove JOYA references from their runtime:
 
 ### Step 3: Clean up projects
 
-For each managed project, decide:
+For each managed project:
 
-- **Keep `.joy/`** — the knowledge stays with the project (recommended).
-- **Remove `.joy/`** — delete the directory. Project loses agent context.
+- Remove the project's entry from `$JOYA_MY/shared/projects/`
+- Project repos are unaffected — their docs belong to the project, not to JOYA
 
 ### Step 4: Remove the instance
 
@@ -65,7 +65,7 @@ If an agent still references JOYA files, check its startup configuration for rem
 
 ## After Uninstall
 
-Agents stop following JOYA rules/axioms and stop writing to `.joy/`. They **keep** their identity, memories, and knowledge — those belong to the agent.
+Agents stop following JOYA rules/axioms. They **keep** their identity, memories, and knowledge — those belong to the agent.
 
 ## Rollback / Re-joining
 
