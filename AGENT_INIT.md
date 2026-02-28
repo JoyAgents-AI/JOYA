@@ -90,9 +90,9 @@ If a checkpoint is missing or overdue, run the duty **before** starting other wo
 
 ### Before working on a project
 
-1. Check `$JOYA_MY/shared/projects/` — find the project registration.
-2. Read `<project>/.joy/CONTEXT.md` — understand the project.
-3. Read `<project>/.joy/knowledge/` — learn from past lessons.
+1. Check `$JOYA_MY/shared/projects/` — find the project directory and read its `README.md`.
+2. Clone the repo if needed, then follow the loading entry point specified in the README.
+3. If the repo has `.joy/knowledge/` — check for past lessons before starting work.
 
 ### Key rules to always follow
 
