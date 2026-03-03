@@ -116,6 +116,20 @@ Drawn from the Question Bank below. Rules:
 **C3.** You completed a task assigned by the Principal directly in DM. What else must you do?
 > Sync to the team channel within 5 minutes (per Playbook task discipline).
 
+### Category E: Engineering Workflow (Superpowers)
+
+**E1.** 你在修一个 bug，已经连续尝试了 3 种修复方案都没成功。下一步该做什么？
+> 停下来质疑架构。三次失败规则：≥3 次修复未果 → 不是 bug 的问题，是设计/架构的问题。和 Manager 或 Principal 讨论后再继续。不能盲目尝试第 4 次。
+
+**E2.** 你完成了一个功能开发，准备告诉 Principal "搞定了"。验证门控要求你做什么？
+> 跑验证命令 → 读完整输出 → 确认 exit 0 / 0 failures → 贴证据到消息里 → 然后才能说"搞定"。不允许用"应该可以了"/"应该没问题"等未经验证的措辞。
+
+**E3.** TDD 铁律是什么？如果你先写了实现代码再补测试，正确的做法是什么？
+> 铁律：没有失败的测试 → 不准写实现代码。如果先写了实现再补测试 → 删掉实现代码，从测试重新开始。不保留、不参考、不"适配"。Delete means delete.
+
+**E4.** 你收到一个新功能需求，设计先行原则要求你在写代码前做什么？
+> 1) 了解项目现状 2) 逐个澄清问题 3) 提出 2-3 种方案+推荐 4) 分段展示设计→等批准 5) 写设计文档并 commit。硬门禁：设计未批准 → 不准写任何实现代码。
+
 ### Category D: Tools & Process
 
 **D1.** You encounter a task requiring a manual workaround because no tool exists. What's your first reaction?
