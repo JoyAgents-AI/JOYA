@@ -4,47 +4,9 @@ You are an AI agent. This file tells you how to initialize and operate under the
 
 ---
 
-## Step 0: Runtime Capability Detection
-
-Before entering the decision tree, determine your runtime's capability level:
-
-| Check | Result |
-|-------|--------|
-| Can you see IDENTITY.md / MEMORY.md content without reading a file? | **Level B** (static injection) — Tier 1 files with `inline: true` are pre-loaded. Skip reading those. Follow the on-demand table in AGENTS.md for remaining files. |
-| Did a hook/script trigger this file automatically at session start? | **Level A** (full lifecycle) — Proceed normally through the decision tree below. |
-| Neither? | **Level C** (bare minimum) — Self-load everything. Check `$JOYA_MY/agents/<name>/MANIFEST.yaml` if it exists; otherwise load Tier 1 files manually. |
-
-> **Level B agents:** Your AGENTS.md should list what's pre-injected vs. on-demand. Trust the injected content for Tier 1 `inline: true` files. Only read files marked as on-demand when the trigger condition is met. Skip the decision tree's "file loading" steps for already-injected files.
->
-> **Details:** `core/arch/PLATFORM_ADAPTATION.md`
-
----
-
-## Session Start — Decision Tree
-
-Check these conditions **in order**. Follow the first match.
-
-### 1. Is this a fresh instance?
-
-**Check:** `$JOYA_MY/shared/core/PREFERENCES.md` does not exist, OR `$JOYA_MY/shared/agents/ROSTER.md` does not exist or is empty.
-
-→ Read `JOYA_SETUP.md` — instance initialization + Setup Wizard. (This also creates your agent via `AGENT_SETUP.md`.)
-
-### 2. Are you a new agent (first session)?
-
-**Check:** `$JOYA_MY/agents/<your-name>/IDENTITY.md` does not exist, OR your `MEMORY.md` has no prior session entries.
-
-→ Read `AGENT_SETUP.md` — agent-level onboarding.
-
-### 3. You are a returning agent.
-
-**Check:** IDENTITY.md exists and MEMORY.md has prior session history.
-
-→ Go to **Ongoing Operations** below. (This is the common path — session start, compaction recovery, etc.)
-
----
-
 ## Ongoing Operations
+
+> First-time setup (fresh instance / new agent) → `AGENT_INIT_SETUP.md`
 
 This section runs on **every session start and after every compaction**.
 
@@ -54,26 +16,81 @@ Context compaction = session restart — all previously loaded files are gone. R
 
 **Compaction recovery:** If `$JOYA_MY/agents/<your-name>/SESSION.md` exists and has content, read it first to recover in-progress work context. See `core/arch/COMPACTION_RESILIENCE.md` for the full protocol.
 
+### Level B Fast Path
+
+**If all of the following are true**, skip EXAM_RECORDS lookup and go directly to §Fast Path Scan below:
+1. Platform is **Level B** (e.g., OpenClaw) — workspace `.md` files are already injected into system prompt
+2. MEMORY.md contains `exam: PASS` line for your current model (already injected — just check your context)
+
+> If either condition is false → use the **Standard Path** below.
+
+#### Fast Path Scan
+
+Tier 1 files (IDENTITY, MEMORY, PREFERENCES, PRINCIPAL) are **already injected** — skip all reads.
+
+**Tier 2 — SCAN** (headers + key sections only):
+
+| File | Scan Strategy |
+|------|---------------|
+| `$JOYA_MY/shared/templates/` | Skim file names + first line; full read on persona/trait questions |
+| `PLAYBOOK.md` | Essential section only (above `---` divider) |
+| `AXIOMS.md` | Headings + one-line summaries; full text on demand |
+| `RULES.md` | Index only (~30 lines); individual rules via `core/rules/` on demand |
+| `MESSAGING.md` | MUST/SHOULD/SHOULD NOT tables only |
+| `ROSTER.md` | Agent table only |
+| `INFRASTRUCTURE.md` | Read the index (routing table to `infra/` subfiles); `infra/ESSENTIALS.md` **only if MEMORY.md lacks `infra: synced` within 7 days** — otherwise skip |
+| `$JOYA_MY/shared/rules/README.md` | **Read index**; load `[必读]` files immediately, `[按需]`/`[项目专属]` per trigger |
+| `$JOYA_MY/shared/` | **First session only**: `ls` top-level dirs for mental map; subsequent sessions skip |
+
+**Tier 3 — ON_DEMAND** (load only when the scenario arises):
+
+| Trigger | Read |
+|---------|------|
+| Infrastructure operations (deploy, debug, network) | `infra/ESSENTIALS.md` (refresh `infra: synced` timestamp in MEMORY.md after) |
+| Communication adapter setup | `guides/MESSAGING_SETUP.md` |
+| Deploying / migrating an agent | `guides/DEPLOYMENT.md`, `guides/LIFECYCLE.md` |
+| Uninstalling / offboarding | `guides/UNINSTALL.md` |
+| Upgrading the protocol | `guides/UPGRADING.md` |
+| Task handoff between agents | `guides/PROJECT_MANAGEMENT.md` |
+| Checking your assigned duties | `$JOYA_MY/shared/agents/DUTIES.md` |
+| Creating or sharing tools | `guides/TOOLKIT.md` |
+| Knowledge base operations | `guides/KNOWLEDGE.md` |
+| Running meetings | `guides/MEETINGS.md` |
+| Iteration planning / retro | `guides/PROJECT_MANAGEMENT.md` |
+| Persistence / data questions | `guides/PERSISTENCE.md` |
+| Directory structure / permissions | `core/ARCHITECTURE.md` (index → `core/arch/`) |
+| Multi-agent isolation / capabilities | `guides/MULTI_AGENT.md` |
+| Framework change proposals | `guides/FRAMEWORK_CHANGE_GOVERNANCE.md` |
+| Writing/editing docs (large: >50 lines or new file) | `core/CONTEXT_OPTIMIZATION.md`, `guides/DOC_CHECKLIST.md` |
+| Engineering practices (Git, etc.) | `guides/ENGINEERING.md` |
+| New agent / model change | `guides/ONBOARDING_EXAM.md` |
+| Email send / receive / check | `$JOYA_MY/shared/core/infra/DOMAIN.md` + your `SECRETS.md` for password |
+
+**Self-Check (Quick):** Version matches exam record → Comms reachable → MEMORY.md read/write OK → proceed. Fail → `guides/SELFCHECK.md`.
+
+After Fast Path Scan → skip to §**Project Context Recovery** below, then §**Key rules**.
+
+---
+
+### Standard Path (non-Level B or exam not cached)
+
 **Determine your loading tier.** Check `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md` for your current model.
 
 | Condition | Action |
 |-----------|--------|
-| EXAM_RECORDS has `PASS` for your model at same or lower thinking level | Read `core/init/TIERED.md` → follow it → work |
+| EXAM_RECORDS has `PASS` for your model at same or lower thinking level | Read `core/init/TIERED_FULL.md` → follow it → work |
 | EXAM_RECORDS has `FAIL` for your model at same or higher thinking level | Read `core/init/FULL.md` → follow it → work |
-| No matching record in EXAM_RECORDS | Read `core/init/TIERED.md` → follow it → take the Onboarding Exam (see below) |
+| No matching record in EXAM_RECORDS | Read `AGENT_INIT_SETUP.md` § Onboarding Exam Flow |
 
 Exam records are **instance-level (shared)** — a model that passes once benefits all agents using it. Thinking levels are upward-compatible: PASS at `low` covers `medium`/`high`/`xhigh` (see EXAM_RECORDS.md).
 
-**Onboarding Exam flow (no matching record):**
+---
 
-1. Load via `core/init/TIERED.md` (indexes and summaries only)
-2. Take the exam (`guides/ONBOARDING_EXAM.md`) — tests whether you can operate correctly with only tiered-loaded content
-3. **PASS** → Add row to `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md`. Future sessions (any agent, same model) use Tiered Loading only.
-4. **FAIL** → Add row to `$JOYA_MY/shared/knowledge/EXAM_RECORDS.md`. Read `core/init/FULL.md` to load everything for this session. Future sessions with the same model+thinking go directly to Full Loading (no re-test — the model has proven it needs full content).
+### Project Context Recovery (post-compaction)
 
-> **Design rationale:** The exam tests whether Tiered Loading is *sufficient* for a model — not for a specific agent. A PASS proves summaries are enough; a FAIL proves this model needs full content. Retesting the same model on a different agent wastes tokens on a predictably identical outcome. Framework major version invalidates all records.
-
-> **Note:** Manager role agents may hold a Principal-granted exemption in lieu of an exam. See `guides/ONBOARDING_EXAM.md` § Who Administers.
+After loading Tier 1–2, check MEMORY.md for active project references. For each active project:
+1. Read `$JOYA_MY/shared/projects/<project>/README.md` — get repo URL + loading entry point
+2. Clone the repo if needed, then follow the loading entry point specified in the README
 
 ---
 

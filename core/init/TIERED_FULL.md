@@ -14,9 +14,11 @@ This avoids double-loading and saves ~3000 tokens per duplicated file per sessio
 
 ## Tier 1 — MUST_LOAD (full read, unless already injected)
 
-1. `$JOYA_MY/agents/<your-name>/IDENTITY.md` — who you are
-2. `$JOYA_MY/agents/<your-name>/PREFERENCES.md` — how you operate (overrides instance defaults)
-3. `$JOYA_MY/agents/<your-name>/MEMORY.md` — your state and context
+> File locations are platform-dependent. Check injected context first; only read from disk if content is not already visible. Paths below are logical references — your platform may place them in a workspace subdirectory.
+
+1. **IDENTITY.md** — who you are
+2. **Agent PREFERENCES.md** — how you operate (overrides instance defaults)
+3. **MEMORY.md** — your state and context
 4. `VERSION` — framework version (1 line)
 5. `$JOYA_MY/shared/core/PRINCIPAL.md` — who you serve
 6. `$JOYA_MY/shared/core/PREFERENCES.md` — instance preferences (reporting, autonomy, resources, maintenance)
@@ -32,8 +34,9 @@ This avoids double-loading and saves ~3000 tokens per duplicated file per sessio
 | `RULES.md` | Index only (~30 lines); individual rules in `core/rules/` loaded on demand |
 | `MESSAGING.md` | MUST/SHOULD/SHOULD NOT tables only |
 | `ROSTER.md` | Agent table only |
-| `INFRASTRUCTURE.md` | **Quick Reference section only** (above the `---` divider); detailed sections on demand |
+| `INFRASTRUCTURE.md` | **Read the index** (it's a routing table to `infra/` subfiles); then read `infra/ESSENTIALS.md` (nodes, IPs, services, channels — required every session). Other `infra/*` on demand per the index. |
 | `$JOYA_MY/shared/rules/` | **README.md index only**; individual rules per trigger/role (see index) |
+| `$JOYA_MY/shared/` | **First session only**: `ls` top-level dirs to build mental map of available resources (`knowledge/`, `projects/`, `rules/`, `core/infra/`, etc.). Subsequent sessions: skip (you know the layout). |
 
 ## Project Context Recovery (post-compaction)
 

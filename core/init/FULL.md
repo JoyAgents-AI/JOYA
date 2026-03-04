@@ -4,7 +4,7 @@ Fallback for agents who did not pass the Onboarding Exam under Tiered Loading. R
 
 ## Platform Injection Detection
 
-Same as Tiered Loading: if your platform already injected a file into context, skip the read. See `core/init/TIERED.md § Platform Injection Detection`.
+Same as Tiered Loading: if your platform already injected a file into context, skip the read. See `core/init/TIERED_FULL.md § Platform Injection Detection`.
 
 ## Steps
 
