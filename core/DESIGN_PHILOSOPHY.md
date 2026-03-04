@@ -60,8 +60,8 @@ Not all agents need the same files. Branch the loading chain by role, exam statu
 **Pattern:**
 ```
 AGENT_INIT.md (router — decision tree)
-  ├─ Fresh instance → JOYA_SETUP.md
-  ├─ New agent     → AGENT_SETUP.md
+  ├─ Fresh instance → SETUP_INSTANCE.md
+  ├─ New agent     → SETUP_AGENT.md
   └─ Returning     → Tiered or Full loading (based on exam record)
 ```
 

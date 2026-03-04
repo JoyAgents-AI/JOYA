@@ -168,7 +168,7 @@ Index file pointing to empty `infra/` subdirectory. Populated as infrastructure 
 
 ## Phase 4: Self-Setup as First Agent
 
-You are now the first agent. Run `AGENT_SETUP.md` § First-Time Onboarding to:
+You are now the first agent. Run `SETUP_AGENT.md` § First-Time Onboarding to:
 
 1. Create your agent directory (`$JOYA_MY/agents/<your-name>/`)
 2. Write your IDENTITY.md (ask user for name + persona, or use defaults)

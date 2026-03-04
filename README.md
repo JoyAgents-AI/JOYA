@@ -36,7 +36,7 @@ Other compatible runtimes: Claude Code, Cursor, Windsurf, or any agent setup tha
 
 **Step 2:** Copy and paste this to your agent:
 
-> **Read https://raw.githubusercontent.com/JoyAgents-AI/JOYA/main/JOYA_SETUP.md and follow the instructions to set up JOYA.**
+> **Read https://raw.githubusercontent.com/JoyAgents-AI/JOYA/main/SETUP_INSTANCE.md and follow the instructions to set up JOYA.**
 
 That's it. Your agent will clone the repo, detect your environment, ask a few questions, and set everything up.
 
@@ -47,7 +47,7 @@ That's it. Your agent will clone the repo, detect your environment, ask a few qu
 git clone https://github.com/JoyAgents-AI/JOYA.git ~/joya/lib
 ```
 
-Then tell your agent: "Read `~/joya/lib/JOYA_SETUP.md` and follow it."
+Then tell your agent: "Read `~/joya/lib/SETUP_INSTANCE.md` and follow it."
 
 </details>
 

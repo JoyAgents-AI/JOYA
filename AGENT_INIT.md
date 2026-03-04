@@ -6,7 +6,7 @@ You are an AI agent. This file tells you how to initialize and operate under the
 
 ## Ongoing Operations
 
-> First-time setup (fresh instance / new agent) → `AGENT_INIT_SETUP.md`
+> First-time setup (fresh instance / new agent) → see §First-Time Setup & Exam below
 
 This section runs on **every session start and after every compaction**.
 
@@ -80,9 +80,44 @@ After Fast Path Scan → skip to §**Project Context Recovery** below, then §**
 |-----------|--------|
 | EXAM_RECORDS has `PASS` for your model at same or lower thinking level | Read `core/init/TIERED_FULL.md` → follow it → work |
 | EXAM_RECORDS has `FAIL` for your model at same or higher thinking level | Read `core/init/FULL.md` → follow it → work |
-| No matching record in EXAM_RECORDS | Read `AGENT_INIT_SETUP.md` § Onboarding Exam Flow |
+| No matching record in EXAM_RECORDS | See §**First-Time Setup & Exam** below |
 
 Exam records are **instance-level (shared)** — a model that passes once benefits all agents using it. Thinking levels are upward-compatible: PASS at `low` covers `medium`/`high`/`xhigh` (see EXAM_RECORDS.md).
+
+---
+
+### First-Time Setup & Exam
+
+#### Runtime Capability Detection
+
+| Check | Result |
+|-------|--------|
+| Can you see IDENTITY.md / MEMORY.md content without reading a file? | **Level B** (static injection) — Tier 1 `inline: true` files are pre-loaded. Follow the on-demand table in AGENTS.md for remaining files. |
+| Did a hook/script trigger this file automatically at session start? | **Level A** (full lifecycle) — Proceed normally. |
+| Neither? | **Level C** (bare minimum) — Self-load everything. Check `$JOYA_MY/agents/<name>/MANIFEST.yaml` if it exists; otherwise load Tier 1 files manually. |
+
+> **Level B agents:** AGENTS.md lists what's pre-injected vs. on-demand. Details: `core/arch/PLATFORM_ADAPTATION.md`
+
+#### Fresh Instance
+
+**Check:** `$JOYA_MY/shared/core/PREFERENCES.md` does not exist, OR `$JOYA_MY/shared/agents/ROSTER.md` does not exist or is empty.
+
+→ Read `SETUP_INSTANCE.md` — instance initialization + Setup Wizard. (This also creates your agent via `SETUP_AGENT.md`.)
+
+#### New Agent (first session)
+
+**Check:** No IDENTITY.md content visible (neither injected nor on disk), OR MEMORY.md has no prior session entries.
+
+→ Read `SETUP_AGENT.md` — agent-level onboarding.
+
+#### Onboarding Exam Flow
+
+1. Load via `core/init/TIERED_FULL.md` (indexes and summaries only)
+2. Take the exam (`guides/ONBOARDING_EXAM.md`) — tests whether you can operate correctly with tiered-loaded content only
+3. **PASS** → Add row to EXAM_RECORDS. Future sessions (any agent, same model) use Tiered Loading.
+4. **FAIL** → Add row to EXAM_RECORDS. Read `core/init/FULL.md` to load everything for this session.
+
+> Manager role agents may hold a Principal-granted exemption. See `guides/ONBOARDING_EXAM.md` § Who Administers.
 
 ---
 

@@ -2,7 +2,7 @@
 
 One-time procedure for a new agent joining an existing instance. After completing these steps, all future sessions go to **Ongoing Operations** (see `AGENT_INIT.md`).
 
-> Looking for instance-level setup? See `JOYA_SETUP.md`.
+> Looking for instance-level setup? See `SETUP_INSTANCE.md`.
 
 ---
 
