@@ -19,6 +19,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). This project us
 
 ### Changed
 - **`TIERED.md` → `TIERED_FULL.md`** — Retained as full reference for Standard Path; Fast Path agents use inline scan table in AGENT_INIT.md.
+- **Setup file rename** — `JOYA_SETUP.md` → `SETUP_INSTANCE.md`, `AGENT_SETUP.md` → `SETUP_AGENT.md`. `AGENT_INIT_SETUP.md` deleted and merged into `AGENT_INIT.md` §First-Time Setup & Exam. Convention: `SETUP_*` = one-time, `AGENT_INIT` = every session.
 - **`infra/ESSENTIALS.md`** — Moved from Tier 2 (every session) to Tier 3 (on-demand) with 7-day checkpoint in MEMORY.md.
 - **Tier 2 scan table** — All file references now include full path prefixes (`$JOYA_LIB/core/`, `$JOYA_MY/shared/core/`, etc.).
 - **`COMPACTION_RESILIENCE.md`** — PREFERENCES.md re-load now conditional ("if it exists").
