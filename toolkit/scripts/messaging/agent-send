@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # agent-send — Cross-agent message router for JOYA
-# Reads config from DIRECTORY.json (under $JOY_ROOT/instance/agents/)
+# Reads config from DIRECTORY.json (under $JOY_ROOT/my/shared/agents/)
 #
 # Usage: agent-send <agent> <message>
 #
@@ -27,7 +27,7 @@ if [ -z "${JOY_ROOT:-}" ]; then
   JOY_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 fi
 
-DIR_JSON="$JOY_ROOT/instance/agents/DIRECTORY.json"
+DIR_JSON="$JOY_ROOT/my/shared/agents/DIRECTORY.json"
 
 if [ ! -f "$DIR_JSON" ]; then
   echo "❌ DIRECTORY.json not found: $DIR_JSON"

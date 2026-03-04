@@ -56,14 +56,14 @@ Information fragments from this session not yet in MEMORY.md.
 After compaction, not only working state but also **base context** (identity, rules, preferences) may be lost. Recovery depends on runtime level (see `core/arch/PLATFORM_ADAPTATION.md`):
 
 - **Level A:** Compaction hook re-triggers AGENT_INIT.md → automatic.
-- **Level B:** Runtime re-injects workspace files → Tier 1 `inline: true` files survive automatically. Agent must manually re-read `trigger: always` files (e.g., PREFERENCES.md) and SESSION.md.
+- **Level B:** Runtime re-injects workspace files → Tier 1 `inline: true` files survive automatically. Agent must manually re-read `trigger: always` files (e.g., PREFERENCES.md if it exists) and SESSION.md.
 - **Level C:** Agent must self-detect compaction and re-load ALL Tier 1 files.
 
 **Detection signals (any one is sufficient):** MEMORY.md content not visible in context; SESSION.md has content you don't recall; conversation starts with a summary/recap block; you cannot recall your name/role/Principal without reading a file.
 
 **Action after detection:** Before resuming work, verify base context:
 1. Can I state my name, role, and Principal's name? → If not, re-load IDENTITY.md + PRINCIPAL.md
-2. Can I recall current preferences and content policy? → If not, re-load PREFERENCES.md
+2. Can I recall current preferences and content policy? → If not, re-load PREFERENCES.md (if it exists)
 3. Read SESSION.md for work context recovery (Layer 2)
 
 ### Layer 3: Post-Compaction Self-Check (detective) — TERTIARY

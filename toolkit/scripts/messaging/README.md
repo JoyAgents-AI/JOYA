@@ -56,7 +56,7 @@ pip3 install websockets
 
 ## Configuration
 
-All scripts read from `$JOY_ROOT/$JOYA_MY/agents/DIRECTORY.json`.
+All scripts read from `$JOYA_MY/shared/agents/DIRECTORY.json`.
 
 ### DIRECTORY.json format (per agent)
 ```json

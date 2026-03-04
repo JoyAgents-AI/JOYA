@@ -59,7 +59,7 @@ def find_joy_root():
 
 def load_config(joy_root, agent_name):
     """Load agent config from DIRECTORY.json."""
-    dir_path = os.path.join(joy_root, "instance", "agents", "DIRECTORY.json")
+    dir_path = os.path.join(joy_root, "my", "shared", "agents", "DIRECTORY.json")
     if not os.path.isfile(dir_path):
         print(f"❌ DIRECTORY.json not found: {dir_path}")
         sys.exit(1)

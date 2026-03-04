@@ -52,7 +52,7 @@ def find_joy_root():
 
 
 def load_config(joy_root, agent_name):
-    dir_path = os.path.join(joy_root, "instance", "agents", "DIRECTORY.json")
+    dir_path = os.path.join(joy_root, "my", "shared", "agents", "DIRECTORY.json")
     if not os.path.isfile(dir_path):
         print(f"DIRECTORY.json not found: {dir_path}")
         sys.exit(1)
@@ -221,7 +221,7 @@ def should_i_respond(message, user_id):
 def call_claude(message, timeout=120):
     """Call claude -p with the message, return the response text."""
     joy_root = os.environ.get("JOY_ROOT", "")
-    agent_dir = os.path.join(joy_root, "instance", "agents", CFG["agent_name"])
+    agent_dir = os.path.join(joy_root, "my", "agents", CFG["agent_name"])
 
     # Build system prompt with agent identity
     identity_file = os.path.join(agent_dir, "IDENTITY.md")

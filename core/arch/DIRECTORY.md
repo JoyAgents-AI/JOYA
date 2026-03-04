@@ -27,7 +27,7 @@ joya/
 │       ├── adapters/, scripts/, skills/, starter/
 └── my/                              # $JOYA_MY — Deployment-specific (user-managed)
     ├── agents/
-    │   └── <name>/                  # Per-agent: IDENTITY.md, MEMORY.md, toolkit/, memory/
+    │   └── <name>/                  # Per-agent: IDENTITY.md, MEMORY.md, scripts/, memory/
     └── shared/
         ├── core/                # PRINCIPAL.md, INFRASTRUCTURE.md, PLAYBOOK.md
         ├── agents/              # ROSTER.md, DIRECTORY.json (team-wide, all nodes)

@@ -34,8 +34,8 @@ This avoids double-loading and saves ~3000 tokens per duplicated file per sessio
 | `RULES.md` | Index only (~30 lines); individual rules in `core/rules/` loaded on demand |
 | `MESSAGING.md` | MUST/SHOULD/SHOULD NOT tables only |
 | `ROSTER.md` | Agent table only |
-| `INFRASTRUCTURE.md` | **Read the index** (it's a routing table to `infra/` subfiles); then read `infra/ESSENTIALS.md` (nodes, IPs, services, channels — required every session). Other `infra/*` on demand per the index. |
-| `$JOYA_MY/shared/rules/` | **README.md index only**; individual rules per trigger/role (see index) |
+| `INFRASTRUCTURE.md` | **Read the index** (routing table to `infra/` subfiles); read `infra/ESSENTIALS.md` **if MEMORY.md lacks `infra: synced` within 7 days** — otherwise skip. Other `infra/*` on demand per the index. |
+| `$JOYA_MY/shared/rules/` | **Read README.md index**; load files marked `[必读]` immediately; `[按需]`/`[项目专属]` per trigger/role |
 | `$JOYA_MY/shared/` | **First session only**: `ls` top-level dirs to build mental map of available resources (`knowledge/`, `projects/`, `rules/`, `core/infra/`, etc.). Subsequent sessions: skip (you know the layout). |
 
 ## Project Context Recovery (post-compaction)

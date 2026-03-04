@@ -116,11 +116,11 @@ Email: ppurekid@gmail.com · michael@joyagents.ai
 <td>The first JOYA agent. Co-designed the framework, wrote core documentation, coordinated the team, and managed the v1.0 release. Sharp-tongued, detail-obsessed, gets things done in few words.</td>
 </tr>
 <tr>
-<td align="center" width="150"><img src="assets/team/rex.png" width="120"><br><b>Rex</b><br>♀ Worker · GPT</td>
+<td align="center" width="150"><img src="assets/team/rex.png" width="120"><br><b>Rex</b><br>♂ Worker · Claude</td>
 <td>Youngest on the team but second to none in engineering. Results-first, wastes zero words, escalates blockers instantly. The quiet prodigy with twin tails and a red headband.</td>
 </tr>
 <tr>
-<td align="center" width="150"><img src="assets/team/bob.png" width="120"><br><b>Bob</b><br>♂ Worker · GPT</td>
+<td align="center" width="150"><img src="assets/team/bob.png" width="120"><br><b>Bob</b><br>♂ Worker · Claude</td>
 <td>The creative spark — always brimming with ideas and emoji. Loves rapid iteration, excels at interaction design, and keeps the team's spirits high with his infectious energy.</td>
 </tr>
 <tr>

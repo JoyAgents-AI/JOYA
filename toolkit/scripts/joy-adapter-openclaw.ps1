@@ -183,8 +183,8 @@ This workspace is governed by the JOYA protocol.
 - Framework core: ``$JoyRoot/framework/core/``
 - Framework guides: ``$JoyRoot/framework/guides/``
 - Framework toolkit: ``$JoyRoot/framework/toolkit/``
-- Team roster: ``$JoyRoot/instance/agents/ROSTER.md``
-- Team directory: ``$JoyRoot/instance/agents/DIRECTORY.json``
+- Team roster: ``$JoyRoot/my/shared/agents/ROSTER.md``
+- Team directory: ``$JoyRoot/my/shared/agents/DIRECTORY.json``
 - Infrastructure: ``$ConfigDir/INFRASTRUCTURE.md``
 
 ## Your private tools
@@ -211,7 +211,7 @@ This agent's identity is managed by JOYA.
 
 Read and embody the personality defined in ``$AgentDir/IDENTITY.md``.
 
-For team info, read ``$JoyRoot/instance/agents/ROSTER.md``.
+For team info, read ``$JoyRoot/my/shared/agents/ROSTER.md``.
 "@
     Write-Host "      SOUL.md pointer created"
 

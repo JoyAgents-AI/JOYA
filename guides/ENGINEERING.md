@@ -4,6 +4,8 @@ Engineering practices for code-based projects under JOYA.
 
 Applies to projects with `type: engineering` or `mixed`. For project management (tasks, milestones, lifecycle), see `PROJECT_MANAGEMENT.md`.
 
+> **Engineering Workflow Principles** (TDD, design-first, systematic debugging, verification, trinity rule): see `ENGINEERING_WORKFLOW.md`.
+
 ---
 
 ## Principles

@@ -33,12 +33,12 @@ Tier 1 files (IDENTITY, MEMORY, PREFERENCES, PRINCIPAL) are **already injected**
 | File | Scan Strategy |
 |------|---------------|
 | `$JOYA_MY/shared/templates/` | Skim file names + first line; full read on persona/trait questions |
-| `PLAYBOOK.md` | Essential section only (above `---` divider) |
-| `AXIOMS.md` | Headings + one-line summaries; full text on demand |
-| `RULES.md` | Index only (~30 lines); individual rules via `core/rules/` on demand |
-| `MESSAGING.md` | MUST/SHOULD/SHOULD NOT tables only |
-| `ROSTER.md` | Agent table only |
-| `INFRASTRUCTURE.md` | Read the index (routing table to `infra/` subfiles); `infra/ESSENTIALS.md` **only if MEMORY.md lacks `infra: synced` within 7 days** — otherwise skip |
+| `$JOYA_MY/shared/core/PLAYBOOK.md` | Essential section only (above `---` divider) |
+| `$JOYA_LIB/core/AXIOMS.md` | Headings + one-line summaries; full text on demand |
+| `$JOYA_LIB/core/RULES.md` | Index only (~30 lines); individual rules via `core/rules/` on demand |
+| `$JOYA_LIB/guides/MESSAGING.md` | MUST/SHOULD/SHOULD NOT tables only |
+| `$JOYA_MY/shared/agents/ROSTER.md` | Agent table only |
+| `$JOYA_MY/shared/core/INFRASTRUCTURE.md` | Read the index (routing table to `infra/` subfiles); `infra/ESSENTIALS.md` **only if MEMORY.md lacks `infra: synced` within 7 days** — otherwise skip |
 | `$JOYA_MY/shared/rules/README.md` | **Read index**; load `[必读]` files immediately, `[按需]`/`[项目专属]` per trigger |
 | `$JOYA_MY/shared/` | **First session only**: `ls` top-level dirs for mental map; subsequent sessions skip |
 
