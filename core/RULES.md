@@ -20,3 +20,4 @@ Rules in `core/rules/`. Load on demand. Summaries below suffice for daily work.
 | [R10](rules/R10-version-control.md) | `$JOYA_LIB/` MUST Git. `$JOYA_MY/` SHOULD NOT | All | Git ops |
 | [R11](rules/R11-protocol-changes.md) | Core: propose→review→Principal approves. Guides: commit+notify. Instance rules: direct edit | Proposers | Protocol changes |
 | [R12](rules/R12-instance-data-handling.md) | `$JOYA_MY/` real-time consistent (Syncthing/NFS). `$JOYA_LIB/` via `git pull` | Manager | Infra decisions |
+| [R13](rules/R13-workspace-hygiene.md) | Agent root = protocol files only. Generated artifacts → `output/` by type | All | Always |
