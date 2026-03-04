@@ -6,6 +6,31 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). This project us
 
 ---
 
+## [1.2.0] — 2026-03-05
+
+### Added
+- **Level B Fast Path** (`AGENT_INIT.md`) — OpenClaw agents with cached exam results skip EXAM_RECORDS lookup entirely. Two-condition gate: Level B platform + `exam: PASS` in MEMORY.md.
+- **`AGENT_INIT_SETUP.md`** — First-time setup (new agent / fresh instance) split out from AGENT_INIT.md. Returning agents no longer load setup logic.
+- **`ENGINEERING_WORKFLOW.md`** — Engineering principles guide (TDD, design-first, systematic debugging, verification gates, trinity rule). Cross-referenced from `ENGINEERING.md`.
+- **Onboarding exam Category E** — Stress-test questions for engineering workflow compliance.
+- **R13: Workspace Hygiene** — Agent root contains only protocol files; artifacts go to `output/`.
+- **Three-tier rule loading** (`shared/rules/README.md`) — Rules tagged `[必読]` (8 files, every session), `[按需]` (19 files, scenario-triggered), `[項目専属]` (4 files, project-scoped).
+- **Memory lifecycle pointer** — `MEMORY_LIFECYCLE.md` now references `MEMORY_MAINTENANCE.md` operations SOP.
+
+### Changed
+- **`TIERED.md` → `TIERED_FULL.md`** — Retained as full reference for Standard Path; Fast Path agents use inline scan table in AGENT_INIT.md.
+- **`infra/ESSENTIALS.md`** — Moved from Tier 2 (every session) to Tier 3 (on-demand) with 7-day checkpoint in MEMORY.md.
+- **Tier 2 scan table** — All file references now include full path prefixes (`$JOYA_LIB/core/`, `$JOYA_MY/shared/core/`, etc.).
+- **`COMPACTION_RESILIENCE.md`** — PREFERENCES.md re-load now conditional ("if it exists").
+- **`DIRECTORY.md`** — Per-agent directory lists `scripts/` instead of `toolkit/`.
+- **Starter template** — `shared/config/` renamed to `shared/core/` to match production layout. Empty `RELATIONSHIPS.md` stub removed.
+
+### Fixed
+- Toolkit scripts (`agent-send`, `mm-agent-listener*.py`, `joy-adapter-openclaw.ps1`) — `instance/agents/` → `my/shared/agents/` path migration.
+- `messaging/README.md` — Corrected double-path `$JOY_ROOT/$JOYA_MY` reference.
+- `FULL.md`, `AGENT_INIT_SETUP.md` — Updated `TIERED.md` → `TIERED_FULL.md` references.
+- `README.md` — Fixed Rex/Bob model labels (GPT → Claude).
+
 ## [1.1.0] — 2026-02-26
 
 ### Added
